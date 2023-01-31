@@ -1,3 +1,3 @@
 # am
 
-This is an accommodation management web aoo
+This is an accommodation management web app
