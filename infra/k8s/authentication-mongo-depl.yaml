@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authenication-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authenication-mongo
+  template:
+    metadata:
+      labels:
+        app: authenication-mongo
+    spec:
+      containers:
+        - name: authenication-mongo
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: authenication-mongo-srv
+spec:
+  selector:
+    app: authenication-mongo
+  ports:
+    - name: db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017
