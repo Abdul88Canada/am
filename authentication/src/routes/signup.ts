@@ -26,10 +26,20 @@ router.post('/api/users/signup', [
         
         const { email, userName, phoneNumber, password } = req.body;
 
-        const existingUser = await User.findOne({ email });
+        const existingEmail = await User.findOne({ email });
+        const existingUserName = await User.findOne({ userName });
+        const existingPhoneNumber = await User.findOne({ phoneNumber });
 
-        if (existingUser) {
+        if (existingEmail) {
             throw new BadRequestError('Email in use');
+        }
+
+        if (existingUserName) {
+            throw new BadRequestError('username in use');
+        }
+
+        if (existingPhoneNumber) {
+            throw new BadRequestError('phoneNumber in use');
         }
 
         const user = User.build({email, userName, phoneNumber, password});
