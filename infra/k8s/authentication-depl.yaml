@@ -20,7 +20,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: jwt-secret
-                  key: jwr
+                  key: jwr 
 ---
 apiVersion: v1
 kind: Service
