@@ -37,13 +37,18 @@ router.post('/api/users/signup', [
             throw new BadRequestError('phoneNumber in use');
         }
 
-        const user = User.build({email, userName, phoneNumber, password});
+        const userType = 'Owner';
+
+        const user = User.build({email, userName, phoneNumber, password, userType});
         await user.save();
 
         // generate JWT
         const userJwt = jwt.sign({
             id: user.id,
-            email: user.email
+            email: user.email,
+            phoneNumber: user.phoneNumber,
+            userName: user.userName,
+            userType: user.userType
         }, process.env.JWT_KEY!);
 
         // store it on session object
