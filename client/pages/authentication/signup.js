@@ -1,5 +1,7 @@
 import { useState } from "react"
-import axios from 'axios';
+import  Router from 'next/router';
+
+import useRequest from "../../hooks/use-request";
 
 export default () => {
     const [email, setEmail] = useState('');
@@ -7,14 +9,20 @@ export default () => {
     const [userName, setUserName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState(0);
 
+    // a hook to handle the request and if any errors happen
+    const { doRequest, errors } = useRequest({
+        url: '/api/users/signup',
+        method: 'post',
+        body: {
+            email, password, userName, phoneNumber
+        },
+        onSuccess: () => Router.push('/')
+    })
+
     const onSubmit = async (event) => {
         event.preventDefault();
 
-        const response = await axios.post('/api/users/signup', {
-            email, password, userName, phoneNumber
-        });
-
-        console.log(response.data);
+        doRequest();
     }
 
     return (
@@ -36,6 +44,7 @@ export default () => {
                 <label>Username</label>
                 <input  value={userName} onChange={e => setUserName(e.target.value)} className="form-control"/>
             </div>
+            {errors}
             <button className="btn btn-primary">Sign Up</button>
         </form>
     )
