@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import cookieSession from 'cookie-session';
 
 import { addRoomRouter } from './routes/addRoom';
+import {roomsListRouter} from './routes/roomsList';
 import { errorHandler } from './middlewares/error-handler';
 import { NotFoundError } from './errors/not-found-error';
 
@@ -22,9 +23,7 @@ app.use(
 )
 
 app.use(addRoomRouter);
-// app.use(signinRouter);
-// app.use(signoutRouter);
-// app.use(signupRouter);
+app.use(roomsListRouter);
 
 app.get('*', async (req, res) => {
     throw new NotFoundError();
@@ -34,9 +33,9 @@ app.use(errorHandler);
 
 const start = async () => {
     //check that env variables are defined
-    // if (!process.env.JWT_KEY) {
-    //     throw new Error('JWT_KEY must be defined');
-    // }
+     if (!process.env.JWT_KEY) {
+         throw new Error('JWT_KEY must be defined');
+     }
     
     try {
         await mongoose.connect('mongodb://rooms-mongo-srv:27017/room');
