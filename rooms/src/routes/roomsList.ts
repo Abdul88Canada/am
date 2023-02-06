@@ -12,4 +12,4 @@ router.get('/api/rooms/roomsList',
         res.status(200).send(roomList);
 });
 
-export { router as roomsListRouter };
+export { router as roomsListRouter }; 
