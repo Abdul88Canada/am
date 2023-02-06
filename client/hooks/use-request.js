@@ -9,6 +9,7 @@ export default ({ url, method, body, onSuccess }) => {
             setErros(null);
 
             const response = await axios[method](url, body);
+            
 
             if(onSuccess) {
                 onSuccess(response.data);
@@ -23,6 +24,7 @@ export default ({ url, method, body, onSuccess }) => {
                     </ui>
                 </div>
             )
+
         }
 
     }
