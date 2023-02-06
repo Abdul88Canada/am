@@ -33,9 +33,9 @@ app.use(errorHandler);
 
 const start = async () => {
     //check that env variables are defined
-     if (!process.env.JWT_KEY) {
-         throw new Error('JWT_KEY must be defined');
-     }
+     //if (!process.env.JWT_KEY) {
+         //throw new Error('JWT_KEY must be defined');
+     //}
     
     try {
         await mongoose.connect('mongodb://rooms-mongo-srv:27017/room');

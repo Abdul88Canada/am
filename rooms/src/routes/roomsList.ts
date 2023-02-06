@@ -4,7 +4,7 @@ import { Room } from '../models/room';
 
 const router = express.Router();
 
-router.get('/api/rooms/addRoom',
+router.get('/api/rooms/roomsList',
     async (req: Request, res: Response) => {
 
         const roomList = await Room.find();
