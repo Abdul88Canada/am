@@ -16,6 +16,8 @@ spec:
         - name: authentication
           image: us.gcr.io/amp-dev-376317/authentication
           env:
+            - name: MONGO_URI
+              value: mongodb://authenication-mongo-srv:27017/auth
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:

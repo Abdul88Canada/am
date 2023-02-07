@@ -16,6 +16,8 @@ spec:
         - name: buildings
           image: us.gcr.io/amp-dev-376317/buildings
           env:
+            - name: MONGO_URI
+              value: mongodb://buildings-mongo-srv:27017/buildings
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:

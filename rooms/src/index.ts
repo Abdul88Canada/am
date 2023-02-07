@@ -32,12 +32,15 @@ app.use(errorHandler);
 
 const start = async () => {
     //check that env variables are defined
-     //if (!process.env.JWT_KEY) {
-         //throw new Error('JWT_KEY must be defined');
-     //}
+     if (!process.env.JWT_KEY) {
+         throw new Error('JWT_KEY must be defined');
+     }
+     if (!process.env.MONGO_URI) {
+        throw new Error('MONGO_URI must be defined');
+    }
     
     try {
-        await mongoose.connect('mongodb://rooms-mongo-srv:27017/room');
+        await mongoose.connect(process.env.MONGO_URI);
         console.log('Connected to mongoDB');
     } catch(err) {
         console.log(err);
