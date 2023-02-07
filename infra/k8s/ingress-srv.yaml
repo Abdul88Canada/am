@@ -24,6 +24,13 @@ spec:
                 name: rooms-srv
                 port:
                   number: 3000
+          - path: /api/buildings/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: buildings-srv
+                port:
+                  number: 3000
           - path: /?(.*)
             pathType: Prefix
             backend:
