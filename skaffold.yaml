@@ -16,7 +16,7 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
+          - src: 'c'
             dest: .
     - image: us.gcr.io/amp-dev-376317/client
       context: client
@@ -32,5 +32,13 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: '**/*.js'
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: us.gcr.io/amp-dev-376317/buildings
+      context: buildings
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
             dest: .
