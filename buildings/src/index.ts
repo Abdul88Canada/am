@@ -6,6 +6,7 @@ import cookieSession from 'cookie-session';
 import { currentUser, errorHandler, NotFoundError } from '@ampdev/common';
 
 import { createBuildingRouter } from './routes/add-building';
+import { showBuildingRouter } from './routes/show-building';
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(
 app.use(currentUser);
 
 app.use(createBuildingRouter);
+app.use(showBuildingRouter);
 
 app.get('*', async (req, res) => {
     throw new NotFoundError();
