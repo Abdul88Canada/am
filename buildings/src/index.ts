@@ -3,7 +3,9 @@ import { json } from 'body-parser';
 import 'express-async-errors';
 import mongoose from 'mongoose';
 import cookieSession from 'cookie-session';
-import { errorHandler, NotFoundError  } from '@ampdev/common';
+import { currentUser, errorHandler, NotFoundError } from '@ampdev/common';
+
+import { createBuildingRouter } from './routes/add-building';
 
 const app = express();
 
@@ -17,6 +19,10 @@ app.use(
         secure: true
     })
 )
+
+app.use(currentUser);
+
+app.use(createBuildingRouter);
 
 app.get('*', async (req, res) => {
     throw new NotFoundError();
