@@ -1,9 +1,8 @@
 import express, { Request, Response} from 'express';
 import { body } from 'express-validator';
+import { BadRequestError, validateRequest } from '@ampdev/common';
 
 import { Room } from '../models/room';
-import { BadRequestError } from '../errors/bad-request-error';
-import { validateRequest } from '../middlewares/validate-request';
 
 const router = express.Router();
 
