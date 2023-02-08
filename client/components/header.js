@@ -5,8 +5,8 @@ export default ({ currentUser }) => {
     const links = [
         !currentUser && {label: 'Sign Up', href: '/authentication/signup'},
         !currentUser && {label: 'Sign In', href: '/authentication/signin'},
-        currentUser && {label: 'Sign Out', href: '/authentication/signout'},
-        currentUser && {label: 'Add Room', href: '/rooms/addRoom'}
+        currentUser && {label: 'Add Room', href: '/rooms/addRoom'},
+        currentUser && {label: 'Sign Out', href: '/authentication/signout'}
     ].filter(linkConfig => linkConfig)
     .map(({ label, href }) => {
         return (
@@ -17,12 +17,15 @@ export default ({ currentUser }) => {
     });
 
     return (
-        <nav className="navbar navbar-light bg-light">
-            <Link href='/' legacyBehavior><a className= 'navbar-brand'>AM</a></Link>
-            <div className='d-flex justify-content-end'>
-                <ul className='nav d-flex align-items-center'>
-                    {links}
-                </ul>
+        <nav className="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <Link href='/' legacyBehavior><a className='navbar-brand'>AM</a></Link>
+                
+                 <div className="d-flex justify-content-end" id="navbarSupportedContent">
+                    <ul className="navbar-nav justify-content-end">
+                        {links}
+                    </ul>
+                </div>
             </div>
         </nav>
     )

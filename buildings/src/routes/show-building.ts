@@ -1,11 +1,11 @@
 import express, { Request, Response } from 'express';
-import { NotFoundError } from '@ampdev/common';
+import { NotFoundError, requireAuth } from '@ampdev/common';
 
 import { Building } from '../models/buildings';
 
 const router = express.Router();
 
-router.get('/api/buildings/:id', async (req: Request, res: Response) => {
+router.get('/api/buildings/:id', requireAuth, async (req: Request, res: Response) => {
     const building = await Building.findById(req.params.id);
 
     if(!building) {

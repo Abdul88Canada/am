@@ -10,6 +10,7 @@ router.post('/api/buildings/addbuilding', requireAuth, async (req: Request, res:
 
     console.log(req.body);
     try {
+        
         const building = Building.build({ name, location, viewersId });
         await building.save();
 

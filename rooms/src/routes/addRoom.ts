@@ -1,12 +1,12 @@
 import express, { Request, Response} from 'express';
 import { body } from 'express-validator';
-import { BadRequestError, validateRequest } from '@ampdev/common';
+import { BadRequestError, validateRequest, requireAuth } from '@ampdev/common';
 
 import { Room } from '../models/room';
 
 const router = express.Router();
 
-router.post('/api/rooms/addRoom', [
+router.post('/api/rooms/addRoom', requireAuth, [
     body('roomNumber')
         .isLength({ min: 1, max: 5 })
         .withMessage('Room number must be between 1 and 5 digits')
