@@ -23,7 +23,7 @@ LandingPage.getInitialProps = async (context) => {
     const { data } = await client.get('/api/users/currentuser');
     //const rooms = await client.get('/api/buildings/:id');
     console.log(data.currentUser);
-    return {data, /*rooms: rooms.data*/};
+    return {data/*, rooms: rooms.data*/};
 }
 
 export default LandingPage;

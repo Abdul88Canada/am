@@ -6,7 +6,7 @@ import { Room } from '../models/room';
 
 const router = express.Router();
 
-router.post('/api/rooms/addRoom', requireAuth, [
+router.post('/api/rooms/addRoom', [
     body('roomNumber')
         .isLength({ min: 1, max: 5 })
         .withMessage('Room number must be between 1 and 5 digits')
