@@ -8,6 +8,7 @@ import { currentUser, errorHandler, NotFoundError } from '@ampdev/common';
 import { createBuildingRouter } from './routes/add-building';
 import { showBuildingRouter } from './routes/show-building';
 import { updateBuildingRouter } from './routes/update-building';
+import { listBuildingsRouter } from './routes/list-building';
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use(currentUser);
 app.use(createBuildingRouter);
 app.use(showBuildingRouter);
 app.use(updateBuildingRouter);
+app.use(listBuildingsRouter);
 
 app.get('*', async (req, res) => {
     throw new NotFoundError();

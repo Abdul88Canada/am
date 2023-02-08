@@ -8,13 +8,14 @@ export default () => {
     const [password, setPassword] = useState('');
     const [userName, setUserName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState(0);
+    const buildings = [];
 
     // a hook to handle the request and if any errors happen
     const { doRequest, errors } = useRequest({
         url: '/api/users/signup',
         method: 'post',
         body: {
-            email, password, userName, phoneNumber
+            email, password, userName, phoneNumber, buildings
         },
         onSuccess: () => Router.push('/')
     })

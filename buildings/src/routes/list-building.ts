@@ -5,8 +5,8 @@ import { Building } from '../models/buildings';
 
 const router = express.Router();
 
-router.get('/api/buildings/showonebuilding/:id', requireAuth, async (req: Request, res: Response) => {
-    const building = await Building.findById(req.params.id);
+router.get('/api/buildings/:id', requireAuth, async (req: Request, res: Response) => {
+    const building = await Building.find( { viewersId: req.params.id } );
 
     if(!building) {
         throw new NotFoundError();
@@ -15,4 +15,4 @@ router.get('/api/buildings/showonebuilding/:id', requireAuth, async (req: Reques
     res.send(building);
 });
 
-export { router as showBuildingRouter }
+export { router as listBuildingsRouter }

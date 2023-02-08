@@ -18,7 +18,7 @@ router.post('/api/users/signup', [
     ], 
     validateRequest,
     async (req: Request, res: Response) => {
-        const { email, userName, phoneNumber, password } = req.body;
+        const { email, userName, phoneNumber, password, buildings } = req.body;
 
         const existingEmail = await User.findOne({ email });
         const existingUserName = await User.findOne({ userName });
@@ -38,7 +38,7 @@ router.post('/api/users/signup', [
 
         const userType = 'Owner';
 
-        const user = User.build({email, userName, phoneNumber, password, userType});
+        const user = User.build({email, userName, phoneNumber, password, userType, buildings});
         await user.save();
 
         // generate JWT

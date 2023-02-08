@@ -1,4 +1,4 @@
-import RoomShow from "././roomShow"
+import RoomShow from "./roomShow"
 
 const RoomList = ({ rooms }) => {
     const renderedRooms = rooms.map((room) => {
