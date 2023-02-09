@@ -17,6 +17,20 @@ spec:
                 name: authentication-srv
                 port:
                   number: 3000
+          - path: /api/rooms/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: rooms-srv
+                port:
+                  number: 3000
+          - path: /api/buildings/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: buildings-srv
+                port:
+                  number: 3000
           - path: /?(.*)
             pathType: Prefix
             backend:
@@ -24,3 +38,4 @@ spec:
                 name: client-srv
                 port:
                   number: 3000
+          

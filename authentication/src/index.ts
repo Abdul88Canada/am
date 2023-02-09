@@ -3,13 +3,12 @@ import { json } from 'body-parser';
 import 'express-async-errors';
 import mongoose from 'mongoose';
 import cookieSession from 'cookie-session';
+import { errorHandler, NotFoundError  } from '@ampdev/common';
 
 import { currentUserRouter } from './routes/currentuser';
 import { signinRouter } from './routes/signin';
 import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
-import { errorHandler } from './middlewares/error-handler';
-import { NotFoundError } from './errors/not-found-error';
 
 const app = express();
 
@@ -40,9 +39,12 @@ const start = async () => {
     if (!process.env.JWT_KEY) {
         throw new Error('JWT_KEY must be defined');
     }
+    if (!process.env.MONGO_URI) {
+        throw new Error('MONGO_URI must be defined');
+    }
     
     try {
-        await mongoose.connect('mongodb://authenication-mongo-srv:27017/auth');
+        await mongoose.connect(process.env.MONGO_URI);
         console.log('Connected to mongoDB');
     } catch(err) {
         console.log(err);

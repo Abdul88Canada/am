@@ -10,6 +10,7 @@ interface UserAttrs {
     userName: String;
     password: String;
     userType: String;
+    buildings: [Number];
 }
 
 //An interface that describes the properties
@@ -25,7 +26,8 @@ interface UserDoc extends mongoose.Document {
     phoneNumber: Number;
     userName: String;
     password: String;
-    userType: String
+    userType: String;
+    buildings: [Number];
 }
 
 const userSchema = new mongoose.Schema({
@@ -48,6 +50,9 @@ const userSchema = new mongoose.Schema({
     userType: {
         type: String,
         required: true
+    },
+    buildings: {
+        type: [Number]
     }
 }, {
     toJSON: {

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: buildings-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: buildings
+  template:
+    metadata:
+      labels: 
+        app: buildings
+    spec:
+      containers:
+        - name: buildings
+          image: us.gcr.io/amp-dev-376317/buildings
+          env:
+            - name: MONGO_URI
+              value: mongodb://buildings-mongo-srv:27017/buildings
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: jwr 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: buildings-srv
+spec:
+  selector:
+    app: buildings
+  ports:
+    - name: buildings
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
