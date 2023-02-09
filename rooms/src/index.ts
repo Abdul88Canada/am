@@ -3,7 +3,7 @@ import { json } from 'body-parser';
 import 'express-async-errors';
 import mongoose from 'mongoose';
 import cookieSession from 'cookie-session';
-import { errorHandler, NotFoundError } from '@ampdev/common';
+import { currentUser, errorHandler, NotFoundError } from '@ampdev/common';
 
 import { addRoomRouter } from './routes/addRoom';
 import {roomsListRouter} from './routes/roomsList';
@@ -20,6 +20,8 @@ app.use(
         secure: true
     })
 )
+
+app.use(currentUser);
 
 app.use(addRoomRouter);
 app.use(roomsListRouter);

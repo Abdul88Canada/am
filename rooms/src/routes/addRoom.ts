@@ -11,7 +11,7 @@ router.post('/api/rooms/addRoom', [
         .isLength({ min: 1, max: 5 })
         .withMessage('Room number must be between 1 and 5 digits')
     ], 
-    validateRequest,
+    validateRequest, requireAuth,
     async (req: Request, res: Response) => {
         const { roomNumber } = req.body;
         const existingRoom = await Room.findOne({ roomNumber });
