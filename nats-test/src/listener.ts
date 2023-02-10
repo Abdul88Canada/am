@@ -1,4 +1,5 @@
 import { randomBytes } from 'crypto';
+import nats from 'node-nats-streaming';
 
 import { BuildingCreatedListener } from './events/buidling-created-listener';
 
@@ -21,7 +22,3 @@ stan.on('connect', () => {
 
 process.on('SIGINT', () => stan.close());
 process.on('SIGTERM', () => stan.close());
-
-
-
-

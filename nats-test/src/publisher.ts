@@ -1,4 +1,5 @@
 import nats from 'node-nats-streaming';
+import { BuildingCreatedPublisher } from './events/building-created-publisher';
 
 console.clear();
 
@@ -10,7 +11,12 @@ const stan = nats.connect('amp', 'abc', {
 stan.on('connect', () => {
     console.log('Publisher connected to NATs');
 
-    const data = JSON.stringify({
+    const publisher = new BuildingCreatedPublisher(stan);
+    publisher.publish({
+        id: "123"
+    });
+
+    /*const data = JSON.stringify({
         viewersId: '123',
         name: '7yat',
         location: "dammam"
@@ -18,5 +24,5 @@ stan.on('connect', () => {
 
     stan.publish('building:created', data, () => {
         console.log('Event published');
-    })
+    })*/
 });
