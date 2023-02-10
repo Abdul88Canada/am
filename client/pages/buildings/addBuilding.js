@@ -1,9 +1,10 @@
 import { useState } from "react"
 import  Router from 'next/router';
 
+import buildClient from "../../api/build-client";
 import useRequest from "../../hooks/use-request";
 
-const AddBuilding = ({currentUser}) => {
+const AddBuilding = ({data}) => {
     const [buildingName, setBuildingName] = useState('');
     const [buildingLocation, setBuildingLocation] = useState('');
     const viewersId = data.currentUser.id

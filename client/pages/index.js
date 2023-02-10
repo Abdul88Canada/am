@@ -1,5 +1,4 @@
 import buildClient from '../api/build-client';
-
 import RoomList from '../components/rooms/roomList';
 import BuildingList from '../components/buildings/buildingList';
 

@@ -1,7 +1,6 @@
-import nats, { Message } from 'node-nats-streaming';
 import { randomBytes } from 'crypto';
 
-
+import { BuildingCreatedListener } from './events/buidling-created-listener';
 
 console.clear();
 
@@ -16,21 +15,13 @@ stan.on('connect', () => {
         console.log('NATs connection closed!');
         process.exit();
     });
-
-    const options = stan
-    .subscriptionOptions()
-    .setManualAckMode(true);
-    const subscription = stan.subscribe('building:created', 'building-service-q-group', options);
     
-    subscription.on('message', (msg: Message) => {
-        const data = msg.getData();
-
-        if (typeof data === 'string') {
-            console.log(`Received event #${msg.getSequence()}, with data: ${data}`)
-        }
-        msg.ack();
-    });
+    new BuildingCreatedListener(stan).listen();
 });
 
 process.on('SIGINT', () => stan.close());
 process.on('SIGTERM', () => stan.close());
+
+
+
+
