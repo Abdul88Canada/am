@@ -10,5 +10,6 @@ export class BuildingCreatedListener extends Listener<BuildingCreatedEvent> {
 
     onMessage(data: BuildingCreatedEvent['data'], msg: Message) {
         console.log('Event Data', data);
+        msg.ack();
     }
 }
