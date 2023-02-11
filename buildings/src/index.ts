@@ -9,6 +9,7 @@ import { createBuildingRouter } from './routes/add-building';
 import { showBuildingRouter } from './routes/show-building';
 import { updateBuildingRouter } from './routes/update-building';
 import { listBuildingsRouter } from './routes/list-building';
+import { natsWraper } from './nats-wrapper';
 
 const app = express();
 
@@ -47,6 +48,14 @@ const start = async () => {
     }
     
     try {
+        await natsWraper.connect('amp', 'bader', 'http://nats-srv:4222');
+        natsWraper.client.on('close', () => {
+            console.log('NATs connection closed!');
+            process.exit();
+        });
+        process.on('SIGINT', () => natsWraper.client.close());
+        process.on('SIGTERM', () => natsWraper.client.close());
+        
         await mongoose.connect(process.env.MONGO_URI);
         console.log('Connected to mongoDB');
     } catch(err) {

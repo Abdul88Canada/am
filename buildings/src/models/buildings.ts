@@ -5,7 +5,6 @@ import mongoose from "mongoose";
 interface BuildingAttrs {
     name: String;
     location: String;
-    viewersId: [String];
 }
 
 //An interface that describes the properties
@@ -13,7 +12,6 @@ interface BuildingAttrs {
 interface BuildingDoc extends mongoose.Document {
     name: String;
     location: String;
-    viewersId: [String];
 }
 
 //An interface that describes the properties
@@ -29,9 +27,6 @@ const buildingSchema = new mongoose.Schema({
     },
     location: {
         type: String
-    },
-    viewersId: {
-        type: [String]
     }
 }, {
         toJSON: {

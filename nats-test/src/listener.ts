@@ -12,13 +12,7 @@ const stan = nats.connect('amp', randomBytes(4).toString('hex'), {
 stan.on('connect', () => {
     console.log('Listener connected to NATs');
 
-    stan.on('close', () => {
-        console.log('NATs connection closed!');
-        process.exit();
-    });
+    
     
     new BuildingCreatedListener(stan).listen();
 });
-
-process.on('SIGINT', () => stan.close());
-process.on('SIGTERM', () => stan.close());

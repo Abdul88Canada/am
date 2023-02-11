@@ -5,15 +5,15 @@ import buildClient from "../../api/build-client";
 import useRequest from "../../hooks/use-request";
 
 const AddBuilding = ({data}) => {
-    const [buildingName, setBuildingName] = useState('');
-    const [buildingLocation, setBuildingLocation] = useState('');
-    const viewersId = data.currentUser.id
+    const [name, setName] = useState('');
+    const [location, setLocation] = useState('');
+    const user_id = data.currentUser.id
     // a hook to handle the request and if any errors happen
     const { doRequest, errors } = useRequest({
         url: '/api/buildings/addbuilding',
         method: 'post',
         body: {
-            buildingName, buildingLocation, viewersId
+            name, location, user_id
         },
         onSuccess: () => Router.push('/')
         
@@ -29,11 +29,11 @@ const AddBuilding = ({data}) => {
             <h1>Add Building</h1>
             <div className="form-group">
                 <label>Building Name</label>
-                <input value={buildingName} onChange={e => setBuildingName(e.target.value)} className="form-control"/>
+                <input value={name} onChange={e => setName(e.target.value)} className="form-control"/>
             </div>
             <div className="form-group">
                 <label>Building Location</label>
-                <input value={buildingLocation} onChange={e => setBuildingLocation(e.target.value)} className="form-control"/>
+                <input value={location} onChange={e => setLocation(e.target.value)} className="form-control"/>
             </div>
             {errors}
             <button className="btn btn-primary">Add</button>

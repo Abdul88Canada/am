@@ -12,11 +12,11 @@ router.put('/api/buildings/:id', requireAuth, async (req: Request, res: Response
         throw new NotFoundError();
     }
 
-    building.viewersId.map(viewerId => {
+    /*building.viewersId.map(viewerId => {
         if(viewerId !== req.currentUser!.id) {
             throw new NotAuthorizedError();
         }
-    })
+    });*/
     
 
     res.send(building);
