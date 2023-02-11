@@ -3,7 +3,8 @@ import { body } from 'express-validator';
 import jwt  from 'jsonwebtoken';
 import { BadRequestError, validateRequest } from '@ampdev/common';
 
-import { User } from '../models/user';
+import { Users } from '../models/users';
+import { Authentication } from '../models/authentication';
 
 const router = express.Router();
 
@@ -18,11 +19,11 @@ router.post('/api/users/signup', [
     ], 
     validateRequest,
     async (req: Request, res: Response) => {
-        const { email, userName, phoneNumber, password, buildings } = req.body;
+        const { email, userName, phoneNumber, password } = req.body;
 
-        const existingEmail = await User.findOne({ email });
-        const existingUserName = await User.findOne({ userName });
-        const existingPhoneNumber = await User.findOne({ phoneNumber });
+        const existingEmail = await Authentication.findOne({ email });
+        const existingUserName = await Authentication.findOne({ userName });
+        const existingPhoneNumber = await Authentication.findOne({ phoneNumber });
 
         if (existingEmail) {
             throw new BadRequestError('Email in use');
@@ -36,18 +37,22 @@ router.post('/api/users/signup', [
             throw new BadRequestError('phoneNumber in use');
         }
 
-        const userType = 'Owner';
+        const auth = Authentication.build({email, userName, phoneNumber, password});
+        await auth.save();
 
-        const user = User.build({email, userName, phoneNumber, password, userType, buildings});
-        await user.save();
+        const user_id = auth.id;
+        const user_type = 'Owner';
+        const fullname = '';
+        const created_at = new Date();
+
+        const user = Users.build({user_id, user_type, fullname, created_at});
 
         // generate JWT
         const userJwt = jwt.sign({
-            id: user.id,
-            email: user.email,
-            phoneNumber: user.phoneNumber,
-            userName: user.userName,
-            userType: user.userType
+            id: auth.id,
+            email: auth.email,
+            phoneNumber: auth.phoneNumber,
+            userName: auth.userName,
         }, process.env.JWT_KEY!);
 
         // store it on session object
@@ -55,7 +60,7 @@ router.post('/api/users/signup', [
             jwt: userJwt
         };
 
-        res.status(201).send(user);
+        res.status(201).send(auth);
 });
 
 export { router as signupRouter };

@@ -4,33 +4,29 @@ import { Password } from "../services/password";
 
 //An interface that describes the properties
 //that are required to create a new user
-interface UserAttrs {
+interface AuthenticationAttrs {
     email: String;
     phoneNumber: Number;
     userName: String;
     password: String;
-    userType: String;
-    buildings: [Number];
 }
 
 //An interface that describes the properties
 //that a user model has
-interface UserModel extends mongoose.Model<UserDoc> {
-    build(attrs: UserAttrs): UserDoc;
+interface AuthenticationModel extends mongoose.Model<AuthenticationDoc> {
+    build(attrs: AuthenticationAttrs): AuthenticationDoc;
 }
 
 //An interface that describes the properties
 //that a user document has
-interface UserDoc extends mongoose.Document {
+interface AuthenticationDoc extends mongoose.Document {
     email: String;
     phoneNumber: Number;
     userName: String;
     password: String;
-    userType: String;
-    buildings: [Number];
 }
 
-const userSchema = new mongoose.Schema({
+const authenticationSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true
@@ -46,13 +42,6 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    },
-    userType: {
-        type: String,
-        required: true
-    },
-    buildings: {
-        type: [Number]
     }
 }, {
     toJSON: {
@@ -65,7 +54,7 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-userSchema.pre('save', async function(done) {
+authenticationSchema.pre('save', async function(done) {
     if (this.isModified('password')) {
         const hashed = await Password.toHash(this.get('password'));
         this.set('password', hashed); 
@@ -74,10 +63,10 @@ userSchema.pre('save', async function(done) {
     done();
 });
 
-userSchema.statics.build = (attrs: UserAttrs) => {
-    return new User(attrs);
+authenticationSchema.statics.build = (attrs: AuthenticationAttrs) => {
+    return new Authentication(attrs);
 }
 
-const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
+const Authentication = mongoose.model<AuthenticationDoc, AuthenticationModel>('Authentication', authenticationSchema);
 
-export { User };
+export { Authentication };
