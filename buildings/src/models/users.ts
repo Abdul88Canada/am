@@ -5,11 +5,11 @@ import { BuildingDoc } from "./buildings";
 //An interface that describes the properties
 //that are required to create a new user
 interface UsersAttrs {
-    user_id: Types.ObjectId;
+    user_id: mongoose.Schema.Types.ObjectId;
     user_type: String;
-    fullname: String;
+    full_name?: String;
     created_at: Date;
-    linked_properties: [mongoose.Schema.Types.ObjectId];
+    linked_properties?: [mongoose.Schema.Types.ObjectId];
 }
 
 //An interface that describes the properties
@@ -21,25 +21,24 @@ interface UsersModel extends mongoose.Model<UsersDoc> {
 //An interface that describes the properties
 //that a user document has
 interface UsersDoc extends mongoose.Document {
-    user_id: Types.ObjectId;
+    user_id: mongoose.Schema.Types.ObjectId;
     user_type: String;
-    fullname: String;
+    full_name?: String;
     created_at: Date;
-    linked_properties: [mongoose.Schema.Types.ObjectId];
+    linked_properties?: [mongoose.Schema.Types.ObjectId];
 }
 
 const usersSchema = new mongoose.Schema({
     user_id: {
-        type: Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         required: true
     },
     user_type: {
         type: String,
         required: true
     },
-    fullname: {
+    full_name: {
         type: String,
-        required: true
     },
     linked_properties: {
         type: [mongoose.Schema.Types.ObjectId],

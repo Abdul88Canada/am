@@ -14,7 +14,7 @@ router.get('/api/buildings', requireAuth, async (req: Request, res: Response) =>
         throw new NotFoundError();
     }
 
-    const buildings = await Building.find( { $in: user.linked_properties } );
+    const buildings = await Building.find( { $in: user?.linked_properties } );
 
     if(!buildings) {
         throw new NotFoundError();
