@@ -1,5 +1,7 @@
 import mongoose, {Types} from "mongoose";
 
+import { BuildingDoc } from "./buildings";
+
 //An interface that describes the properties
 //that are required to create a new user
 interface UsersAttrs {
@@ -7,6 +9,7 @@ interface UsersAttrs {
     user_type: String;
     fullname: String;
     created_at: Date;
+    linked_properties: [mongoose.Schema.Types.ObjectId];
 }
 
 //An interface that describes the properties
@@ -22,6 +25,7 @@ interface UsersDoc extends mongoose.Document {
     user_type: String;
     fullname: String;
     created_at: Date;
+    linked_properties: [mongoose.Schema.Types.ObjectId];
 }
 
 const usersSchema = new mongoose.Schema({
@@ -38,7 +42,8 @@ const usersSchema = new mongoose.Schema({
         required: true
     },
     linked_properties: {
-        type: [Types.ObjectId]
+        type: [mongoose.Schema.Types.ObjectId],
+        //ref: 'Building'
     },
     created_at: {
         type: Date

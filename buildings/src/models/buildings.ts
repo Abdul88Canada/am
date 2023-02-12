@@ -9,7 +9,7 @@ interface BuildingAttrs {
 
 //An interface that describes the properties
 //that a building document has
-interface BuildingDoc extends mongoose.Document {
+export interface BuildingDoc extends mongoose.Document {
     name: String;
     location: String;
 }
