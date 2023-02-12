@@ -1,19 +1,18 @@
 import { useState } from "react"
 import  Router from 'next/router';
 
-import buildClient from "../../api/build-client";
 import useRequest from "../../hooks/use-request";
 
-const AddBuilding = ({data}) => {
+const AddBuilding = () => {
     const [name, setName] = useState('');
     const [location, setLocation] = useState('');
-    const user_id = data.currentUser.id
+
     // a hook to handle the request and if any errors happen
     const { doRequest, errors } = useRequest({
-        url: '/api/buildings/addbuilding',
+        url: '/api/buildings',
         method: 'post',
         body: {
-            name, location, user_id
+            name, location
         },
         onSuccess: () => Router.push('/')
         
@@ -40,13 +39,4 @@ const AddBuilding = ({data}) => {
         </form>
     );
 }
-
-AddBuilding.getInitialProps = async (context) => {
-    
-    const client = buildClient(context);
-    const { data } = await client.get('/api/users/currentuser');
-    console.log(data.currentUser);
-    return {data};
-}
-
 export default AddBuilding;

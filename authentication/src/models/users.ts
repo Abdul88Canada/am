@@ -3,7 +3,7 @@ import mongoose, {Types} from "mongoose";
 //An interface that describes the properties
 //that are required to create a new user
 interface UsersAttrs {
-    user_id: Types.ObjectId;
+    user_id: String;
     user_type: String;
     full_name: String;
     created_at: Date;
@@ -18,7 +18,7 @@ interface UsersModel extends mongoose.Model<UsersDoc> {
 //An interface that describes the properties
 //that a user document has
 interface UsersDoc extends mongoose.Document {
-    user_id: Types.ObjectId;
+    user_id: String;
     user_type: String;
     full_name: String;
     created_at: Date;
@@ -26,7 +26,7 @@ interface UsersDoc extends mongoose.Document {
 
 const usersSchema = new mongoose.Schema({
     user_id: {
-        type: Types.ObjectId,
+        type: String,
         required: true
     },
     user_type: {
@@ -38,7 +38,7 @@ const usersSchema = new mongoose.Schema({
         required: true
     },
     linked_properties: {
-        type: [Types.ObjectId]
+        type: [String]
     },
     created_at: {
         type: Date

@@ -21,11 +21,11 @@ router.post('/api/buildings', requireAuth, [
         const building = Building.build({ name, location });
         await building.save();
 
-       await Users.updateOne({user_id: user_id}, {$push: {linked_properties: building.id}});
+       await Users.updateOne({user_id: req.currentUser!.id}, {$push: {linked_properties: building.id}});
 
 
         new BuildingCreatedPublisher(natsWraper.client).publish({
-            user_id: user_id,
+            user_id: req.currentUser!.id,
             property_id: building.id
         });
 
