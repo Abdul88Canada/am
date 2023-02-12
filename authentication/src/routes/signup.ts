@@ -5,6 +5,8 @@ import { BadRequestError, validateRequest } from '@ampdev/common';
 
 import { Users } from '../models/users';
 import { Authentication } from '../models/authentication';
+import { UserCreatedPublisher } from '../events/publishers/user-created-publisher';
+import { natsWraper } from "../nats-wrapper";
 
 const router = express.Router();
 
@@ -42,10 +44,10 @@ router.post('/api/users/signup', [
 
         const user_id = auth.id;
         const user_type = 'Owner';
-        const fullname = '';
+        const full_name = '';
         const created_at = new Date();
 
-        const user = Users.build({user_id, user_type, fullname, created_at});
+        const user = Users.build({user_id, user_type, full_name, created_at});
 
         // generate JWT
         const userJwt = jwt.sign({
@@ -59,6 +61,13 @@ router.post('/api/users/signup', [
         req.session = {
             jwt: userJwt
         };
+
+        new UserCreatedPublisher(natsWraper.client).publish({
+            user_id,
+            full_name,
+            user_type,
+            created_at
+        });
 
         res.status(201).send(auth);
 });

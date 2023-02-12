@@ -5,7 +5,7 @@ import mongoose, {Types} from "mongoose";
 interface UsersAttrs {
     user_id: Types.ObjectId;
     user_type: String;
-    fullname: String;
+    full_name: String;
     created_at: Date;
 }
 
@@ -20,7 +20,7 @@ interface UsersModel extends mongoose.Model<UsersDoc> {
 interface UsersDoc extends mongoose.Document {
     user_id: Types.ObjectId;
     user_type: String;
-    fullname: String;
+    full_name: String;
     created_at: Date;
 }
 
@@ -33,7 +33,7 @@ const usersSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    fullname: {
+    full_name: {
         type: String,
         required: true
     },
