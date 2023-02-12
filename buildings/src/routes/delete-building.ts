@@ -3,6 +3,8 @@ import { NotAuthorizedError, NotFoundError, requireAuth } from '@ampdev/common';
 
 import { Building } from '../models/buildings';
 import { Users } from '../models/users';
+import { BuildingDeletedPublisher } from '../events/publishers/building-deleted-publisher';
+import { natsWraper } from "../nats-wrapper";
 
 const router = express.Router();
 
@@ -28,6 +30,11 @@ router.delete('/api/buildings/:id', requireAuth, async (req: Request, res: Respo
     await Building.deleteOne({id: req.params.id});
 
     await Users.updateOne({user_id}, {$pull: {linked_properties: req.params.id}});
+
+    new BuildingDeletedPublisher(natsWraper.client).publish({
+        user_id: user_id,
+        property_id: building.id
+    });
 
     res.send(building);
 });
