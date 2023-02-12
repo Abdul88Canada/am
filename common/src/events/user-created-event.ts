@@ -1,9 +1,10 @@
 import { Subjects } from "./subjects";
+import mongoose from "mongoose";
 
 export interface UserCreatedEvent {
     subject: Subjects.UserCreated;
     data: {
-        id: string,
+        user_id: mongoose.Schema.Types.ObjectId,
         full_name: string,
         linked_properties: [string],
         user_type: string,
