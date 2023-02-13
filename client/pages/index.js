@@ -1,10 +1,12 @@
+import BuildingList from '../components/buildings/buildingList';
+
 const LandingPage =  ({ buildings, currentUser }) => {   
     return (
         currentUser ? (
             <div>
                 Welcome, {currentUser.userName}!
                 <div>
-                    You have {buildings.length} properties
+                    <BuildingList buildings={buildings}/>
                 </div>
             </div>) 
             : <h1>You are signed out</h1>
@@ -12,8 +14,13 @@ const LandingPage =  ({ buildings, currentUser }) => {
 };
 
 LandingPage.getInitialProps = async (context, client, currentUser) => {
+   if(!currentUser) {
+    return {}
+   } 
+   else {
     const { data } = await client.get('/api/buildings');
     return {buildings: data};
+   }
 }
 
 export default LandingPage;

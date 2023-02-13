@@ -3,16 +3,17 @@ import  Router from 'next/router';
 
 import useRequest from "../../hooks/use-request";
 
-const AddBuilding = () => {
+const AddBuilding = ({currentUser}) => {
     const [name, setName] = useState('');
     const [location, setLocation] = useState('');
+    const user_id = currentUser.id;
 
     // a hook to handle the request and if any errors happen
     const { doRequest, errors } = useRequest({
         url: '/api/buildings',
         method: 'post',
         body: {
-            name, location
+            name, location, user_id
         },
         onSuccess: () => Router.push('/')
         

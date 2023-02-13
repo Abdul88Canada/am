@@ -1,6 +1,6 @@
 const BuildingShow = ({ building }) => {
     return (
-        <div>{building.buildingName}</div>
+        <div>{building.name}</div>
     );
 }
 
