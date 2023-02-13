@@ -7,6 +7,7 @@ export interface BuildingCreatedEvent {
     data: {
         id: String,
         name: String,
-        location: String
+        location: String,
+        user_id: String
     }
 }
