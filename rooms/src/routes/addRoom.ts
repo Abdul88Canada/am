@@ -3,6 +3,7 @@ import { body } from 'express-validator';
 import { BadRequestError, validateRequest, requireAuth } from '@ampdev/common';
 
 import { Room } from '../models/room';
+import { Building } from '../models/buildings';
 
 const router = express.Router();
 
@@ -13,17 +14,19 @@ router.post('/api/rooms/addRoom', [
     ], 
     validateRequest, requireAuth,
     async (req: Request, res: Response) => {
-        const { roomNumber } = req.body;
-        const existingRoom = await Room.findOne({ roomNumber });
-
-        if (existingRoom) {
-            throw new BadRequestError('Room already exists');
-        }
-
-        
+        const { roomNumber, selectedBuilding } = req.body;
         const roomState = 0;
+
         const room = Room.build({roomNumber, roomState});
         await room.save();
+
+        console.log('FROM ROOMS SERVICE CREATED ROOM ', room);
+
+        console.log('FROM ROOMS SERVICE UPDATED BUILDING', selectedBuilding);
+        
+        const building = await Building.updateOne({id: selectedBuilding}, {$push: {rooms: room}});
+
+        console.log('FROM ROOMS SERVICE UPDATED BUILDING', building);
 
         res.status(201).send(room);
 });

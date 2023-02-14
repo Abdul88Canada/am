@@ -37,16 +37,16 @@ const buildingSchema = new mongoose.Schema({
         type: String
     },
     rooms: {
-        type: [String]
-    }
-}, {
-        toJSON: {
-            transform(doc, ret) {
-                ret.id = ret._id;
-                delete ret._id;
+        type: [{
+            roomNumber: {
+                type: String
+            },
+            roomState: {
+                type: Number
             }
-        }
+        }]
     }
+}
 );
 
 buildingSchema.statics.build = (attrs: BuildingAttrs) => {
