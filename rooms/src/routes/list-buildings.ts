@@ -10,7 +10,6 @@ router.get('/api/rooms/buildings', requireAuth, async (req: Request, res: Respon
     
     try {
         const user = await Users.findOne({user_id: req.currentUser!.id});
-        console.log('FROM ROOMS SERVICES WITH: ', user);
         if(!user) {
             throw new NotFoundError();
         }
@@ -22,7 +21,6 @@ router.get('/api/rooms/buildings', requireAuth, async (req: Request, res: Respon
             throw new NotFoundError();
         }
 
-        console.log('FROM ROOMS SERVICES WITH: ', buildings);
         res.send(buildings);
     } catch (error) {
         console.log('FROM THE ROOMS SERVICE WITH ERROR: ', error)

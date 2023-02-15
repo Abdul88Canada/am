@@ -4,10 +4,8 @@ import RoomList from '../components/rooms/roomList';
 
 const LandingPage =  ({ buildings, currentUser }) => {   
 
-    const [selectedBuilding, setSelectedBuilding] = useState( buildings?.length > 0 ? buildings[0].id : {});
     const [index, setIndex] = useState(0);
 
-    console.log(index);
     return (
         currentUser ? (
             <div>
@@ -16,7 +14,6 @@ const LandingPage =  ({ buildings, currentUser }) => {
                     <div className="field">  
                         <select className="ui dropdown" onChange= {e => {
                             setIndex(e.target.options.selectedIndex);
-                            setSelectedBuilding(e.target.value)
                             }} >
                             {buildings.map((building) => {
                                 return <option name="building" value={building.id} key={building.id}>{building.name}</option>

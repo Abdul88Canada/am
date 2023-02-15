@@ -19,7 +19,7 @@ export default ({ currentUser }) => {
 
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
+            <div className="container-fluid">
                 <Link href='/' legacyBehavior><a className='navbar-brand'>AM</a></Link>
                 
                  <div className="d-flex justify-content-end" id="navbarSupportedContent">

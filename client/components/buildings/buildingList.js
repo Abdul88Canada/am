@@ -1,8 +1,8 @@
 import BuildingShow from "./buildingShow"
 
 const BuildingList = ({ buildings }) => {
-    const renderedBuildings = buildings.map((building) => {
-        return <BuildingShow key={building.id} building={building} />
+    const renderedBuildings = buildings?.map((building) => {
+        return <BuildingShow key={building?.id} building={building} />
     })
 
     return (

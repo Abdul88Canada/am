@@ -2,7 +2,6 @@ import express, { Request, Response } from 'express';
 import { NotAuthorizedError, NotFoundError, requireAuth } from '@ampdev/common';
 
 import { Building } from '../models/buildings';
-import { Users } from '../models/users';
 
 const router = express.Router();
 
@@ -13,17 +12,7 @@ router.get('/api/buildings/:id', requireAuth, async (req: Request, res: Response
         throw new NotFoundError();
     }
 
-    const user = await Users.findById({user_id: req.body.user_id});
-
-    if(!user) {
-        throw new NotFoundError();
-    }
-
-    if (user.user_id.toString() !== req.currentUser!.id) {
-        throw new NotAuthorizedError();
-    }
-
-    res.send(building);
+    res.status(200).send(building);
 });
 
 export { router as showBuildingRouter }
