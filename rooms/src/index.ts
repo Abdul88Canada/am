@@ -8,6 +8,8 @@ import { currentUser, errorHandler, NotFoundError } from '@ampdev/common';
 import { addRoomRouter } from './routes/addRoom';
 import {roomsListRouter} from './routes/roomsList';
 import { listBuildingsRouter } from './routes/list-buildings';
+import { showRoom } from './routes/show-room';
+
 import { natsWraper } from './nats-wrapper';
 import { BuildingCreatedListener } from './events/listeners/building-created-listener';
 import { UserCreatedListener } from './events/listeners/user-created-listener';
@@ -30,6 +32,7 @@ app.use(currentUser);
 app.use(addRoomRouter);
 app.use(roomsListRouter);
 app.use(listBuildingsRouter); 
+app.use(showRoom);
 
 app.get('*', async (req, res) => {
     throw new NotFoundError();

@@ -1,7 +1,6 @@
 import RoomShow from "./roomShow"
 
 const RoomList = ( {rooms} ) => {
-    console.log("We HAve These Rooms: ", rooms)
     const renderedRooms = rooms?.map((room) => {
         return <RoomShow key={room.id} room={room} />
     })
