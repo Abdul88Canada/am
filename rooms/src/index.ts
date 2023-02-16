@@ -13,6 +13,7 @@ import { deleteRoom } from './routes/delete-room';
 
 import { natsWraper } from './nats-wrapper';
 import { BuildingCreatedListener } from './events/listeners/building-created-listener';
+import { BuildingDeletedListener } from './events/listeners/building-deleted-listener';
 import { UserCreatedListener } from './events/listeners/user-created-listener';
 
 const app = express();
@@ -73,6 +74,7 @@ const start = async () => {
 
         new BuildingCreatedListener(natsWraper.client).listen();
         new UserCreatedListener(natsWraper.client).listen();
+        new BuildingDeletedListener(natsWraper.client).listen();
         
         await mongoose.connect(process.env.MONGO_URI);
         console.log('Connected to mongoDB');

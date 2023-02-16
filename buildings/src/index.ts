@@ -9,6 +9,8 @@ import { createBuildingRouter } from './routes/add-building';
 import { showBuildingRouter } from './routes/show-building';
 import { updateBuildingRouter } from './routes/update-building';
 import { listBuildingsRouter } from './routes/list-building';
+import { deleteBuildingRouter } from './routes/delete-building';
+
 import { natsWraper } from './nats-wrapper';
 import { UserCreatedListener } from './events/listeners/user-created-listener';
 
@@ -31,6 +33,7 @@ app.use(createBuildingRouter);
 app.use(showBuildingRouter);
 app.use(updateBuildingRouter);
 app.use(listBuildingsRouter);
+app.use(deleteBuildingRouter);
 
 app.get('*', async (req, res) => {
     throw new NotFoundError();
