@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 interface BuildingAttrs {
     name: String;
     location: String;
+    user_id: String
 }
 
 //An interface that describes the properties
@@ -12,6 +13,7 @@ interface BuildingAttrs {
 export interface BuildingDoc extends mongoose.Document {
     name: String;
     location: String;
+    user_id: [String]
 }
 
 //An interface that describes the properties
@@ -21,6 +23,9 @@ interface BuildingModel extends mongoose.Model<BuildingDoc> {
 }
 
 const buildingSchema = new mongoose.Schema({
+    user_id: {
+        type: [String]
+    },
     name: {
         type: String,
         required: true

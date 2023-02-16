@@ -21,7 +21,7 @@ const LandingPage =  ({ buildings, currentUser }) => {
                         </select>
                     </div>
                 </div>
-                <RoomList rooms = {buildings[index]?.rooms} />
+                <RoomList rooms = {buildings[index]?.rooms}/>
             </div>
         ) 
             : <h1>You are signed out</h1>

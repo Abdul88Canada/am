@@ -14,7 +14,7 @@ const AddRoom =  ({buildings, currentUser}) => {
         url: '/api/rooms/addRoom',
         method: 'post',
         body: {
-            roomNumber, selectedBuilding
+            roomNumber, selectedBuilding,
         },
         onSuccess: () => Router.push('/')
         

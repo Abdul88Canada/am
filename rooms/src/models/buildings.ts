@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 //that are required to create a new building
 interface BuildingAttrs {
     id: String;
+    user_id?: [String];
     name: String;
     location: String;
     rooms?: [String];
@@ -14,6 +15,7 @@ interface BuildingAttrs {
 export interface BuildingDoc extends mongoose.Document {
     id: String;
     name: String;
+    user_id?: [String];
     location: String;
     rooms?: [String];
 }
@@ -36,6 +38,9 @@ const buildingSchema = new mongoose.Schema({
     location: {
         type: String
     },
+    user_id: {
+        type: [String]
+    },
     rooms: {
         type: [{
             roomNumber: {
@@ -43,6 +48,9 @@ const buildingSchema = new mongoose.Schema({
             },
             roomState: {
                 type: Number
+            },
+            room_id: {
+                type: String
             }
         }]
     }

@@ -1,6 +1,6 @@
 import express, { Request, Response} from 'express';
 import { body } from 'express-validator';
-import { BadRequestError, validateRequest, requireAuth } from '@ampdev/common';
+import { BadRequestError, validateRequest, requireAuth, currentUser } from '@ampdev/common';
 
 import { Room } from '../models/room';
 import { Building } from '../models/buildings';
@@ -14,10 +14,10 @@ router.post('/api/rooms/addRoom', [
     ], 
     validateRequest, requireAuth,
     async (req: Request, res: Response) => {
-        const { roomNumber, selectedBuilding } = req.body;
+        const { roomNumber, selectedBuilding, user_id } = req.body;
         const roomState = 0;
 
-        const room = Room.build({roomNumber, roomState});
+        const room = Room.build({roomNumber, roomState, building_id: selectedBuilding, user_id});
         await room.save();
 
         console.log('FROM ROOMS SERVICE CREATED ROOM ', room);

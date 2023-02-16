@@ -18,7 +18,7 @@ router.post('/api/buildings', requireAuth, [
     const { name, location, user_id } = req.body;
 
     try {
-        const building = Building.build({ name, location });
+        const building = Building.build({ name, location, user_id });
         await building.save();
         
         const user = await Users.updateOne({user_id: user_id}, {$push: {linked_properties: building.id}});
