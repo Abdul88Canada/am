@@ -26,16 +26,16 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
-    - image: us.gcr.io/amp-dev-376317/rooms
-      context: rooms
+    - image: us.gcr.io/amp-dev-376317/units
+      context: units
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: us.gcr.io/amp-dev-376317/buildings
-      context: buildings
+    - image: us.gcr.io/amp-dev-376317/properties
+      context: properties
       docker:
         dockerfile: Dockerfile
       sync:

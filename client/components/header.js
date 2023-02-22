@@ -5,8 +5,8 @@ export default ({ currentUser }) => {
     const links = [
         !currentUser && {label: 'Sign Up', href: '/authentication/signup'},
         !currentUser && {label: 'Sign In', href: '/authentication/signin'},
-        currentUser && {label: 'Add Room', href: '/rooms/addRoom'},
-        currentUser && {label: 'Add Building', href: '/buildings/addBuilding'},
+        currentUser && {label: 'Add Unit', href: '/units/addUnit'},
+        currentUser && {label: 'Add Property', href: '/properties/addProperty'},
         currentUser && {label: 'Sign Out', href: '/authentication/signout'}
     ].filter(linkConfig => linkConfig)
     .map(({ label, href }) => {
