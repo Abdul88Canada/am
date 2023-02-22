@@ -3,11 +3,9 @@ import { useState } from "react";
 
 export default ({ url, method, body, onSuccess }) => {
     const [errors, setErros] = useState(null);
-    console.log(body);
     const doRequest = async () => {
         try {
             setErros(null);
-            console.log(body);
             const response = await axios[method](url, body);
             
 

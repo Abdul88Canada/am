@@ -16,6 +16,14 @@ spec:
         - name: buildings
           image: us.gcr.io/amp-dev-376317/buildings
           env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: 'http://nats-srv:4222'
+            - name: NATS_CLUSTER_ID
+              value: 'amp'
             - name: MONGO_URI
               value: mongodb://buildings-mongo-srv:27017/buildings
             - name: JWT_KEY

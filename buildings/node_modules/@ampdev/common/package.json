@@ -1,6 +1,6 @@
 {
   "name": "@ampdev/common",
-  "version": "1.0.4",
+  "version": "1.0.14",
   "description": "",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -26,6 +26,8 @@
     "cookie-session": "^2.0.0",
     "express": "^4.18.2",
     "express-validator": "^6.14.3",
-    "jsonwebtoken": "^9.0.0"
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.9.1",
+    "node-nats-streaming": "^0.3.2"
   }
 }

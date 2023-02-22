@@ -1,7 +1,7 @@
 import RoomShow from "./roomShow"
 
-const RoomList = ({ rooms }) => {
-    const renderedRooms = rooms.map((room) => {
+const RoomList = ( {rooms} ) => {
+    const renderedRooms = rooms?.map((room) => {
         return <RoomShow key={room.id} room={room} />
     })
 
@@ -9,5 +9,17 @@ const RoomList = ({ rooms }) => {
         <div>{renderedRooms}</div>
     );
 }
+
+RoomList.getInitialProps = async (context, client, currentUser, rooms ) => {
+    if(!currentUser) {
+     return {}
+    } 
+    else {
+     const { data } = await client.get('/api/rooms/', {
+        rooms: rooms
+     });
+     return {rooms: data};
+    }
+ }
 
 export default RoomList;

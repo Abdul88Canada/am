@@ -5,12 +5,12 @@ import { Room } from '../models/room';
 
 const router = express.Router();
 
-router.get('/api/rooms/roomsList', requireAuth,
+router.get('/api/rooms', requireAuth,
     async (req: Request, res: Response) => {
 
-        const roomList = await Room.find();
+        const rooms = await Room.find();
 
-        res.status(200).send(roomList);
+        res.status(200).send(rooms);
 });
 
 export { router as roomsListRouter }; 

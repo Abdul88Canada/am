@@ -1,8 +1,9 @@
 import express, { Request, Response} from 'express';
 import { body } from 'express-validator';
-import { BadRequestError, validateRequest, requireAuth } from '@ampdev/common';
+import { BadRequestError, validateRequest, requireAuth, currentUser } from '@ampdev/common';
 
 import { Room } from '../models/room';
+import { Building } from '../models/buildings';
 
 const router = express.Router();
 
@@ -11,19 +12,21 @@ router.post('/api/rooms/addRoom', [
         .isLength({ min: 1, max: 5 })
         .withMessage('Room number must be between 1 and 5 digits')
     ], 
-    validateRequest,
+    validateRequest, requireAuth,
     async (req: Request, res: Response) => {
-        const { roomNumber } = req.body;
-        const existingRoom = await Room.findOne({ roomNumber });
-
-        if (existingRoom) {
-            throw new BadRequestError('Room already exists');
-        }
-
-        
+        const { roomNumber, selectedBuilding, user_id } = req.body;
         const roomState = 0;
-        const room = Room.build({roomNumber, roomState});
+
+        const room = Room.build({roomNumber, roomState, building_id: selectedBuilding, user_id});
         await room.save();
+
+        console.log('FROM ROOMS SERVICE CREATED ROOM ', room);
+
+        console.log('FROM ROOMS SERVICE UPDATED BUILDING', selectedBuilding);
+        
+        const building = await Building.updateOne({id: selectedBuilding}, {$push: {rooms: room}});
+
+        console.log('FROM ROOMS SERVICE UPDATED BUILDING', building);
 
         res.status(201).send(room);
 });

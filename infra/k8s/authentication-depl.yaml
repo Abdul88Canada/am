@@ -16,6 +16,14 @@ spec:
         - name: authentication
           image: us.gcr.io/amp-dev-376317/authentication
           env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: 'http://nats-srv:4222'
+            - name: NATS_CLUSTER_ID
+              value: 'amp'
             - name: MONGO_URI
               value: mongodb://authenication-mongo-srv:27017/auth
             - name: JWT_KEY

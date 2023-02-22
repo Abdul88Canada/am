@@ -3,10 +3,18 @@ import { json } from 'body-parser';
 import 'express-async-errors';
 import mongoose from 'mongoose';
 import cookieSession from 'cookie-session';
-import { errorHandler, NotFoundError } from '@ampdev/common';
+import { currentUser, errorHandler, NotFoundError } from '@ampdev/common';
 
 import { addRoomRouter } from './routes/addRoom';
 import {roomsListRouter} from './routes/roomsList';
+import { listBuildingsRouter } from './routes/list-buildings';
+import { showRoom } from './routes/show-room';
+import { deleteRoom } from './routes/delete-room';
+
+import { natsWraper } from './nats-wrapper';
+import { BuildingCreatedListener } from './events/listeners/building-created-listener';
+import { BuildingDeletedListener } from './events/listeners/building-deleted-listener';
+import { UserCreatedListener } from './events/listeners/user-created-listener';
 
 const app = express();
 
@@ -21,8 +29,13 @@ app.use(
     })
 )
 
+app.use(currentUser);
+
 app.use(addRoomRouter);
 app.use(roomsListRouter);
+app.use(listBuildingsRouter); 
+app.use(showRoom);
+app.use(deleteRoom);
 
 app.get('*', async (req, res) => {
     throw new NotFoundError();
@@ -38,8 +51,31 @@ const start = async () => {
      if (!process.env.MONGO_URI) {
         throw new Error('MONGO_URI must be defined');
     }
+    if (!process.env.NATS_CLIENT_ID) {
+        throw new Error('NATS_CLIENT_ID must be defined');
+    }
+
+    if (!process.env.NATS_CLUSTER_ID) {
+        throw new Error('NATS_CLUSTER_ID must be defined');
+    }
+
+    if (!process.env.NATS_URL) {
+        throw new Error('NATS_URL must be defined');
+    }
     
     try {
+        await natsWraper.connect(process.env.NATS_CLUSTER_ID, process.env.NATS_CLIENT_ID, process.env.NATS_URL);
+        natsWraper.client.on('close', () => {
+            console.log('NATs connection closed!');
+            process.exit();
+        });
+        process.on('SIGINT', () => natsWraper.client.close());
+        process.on('SIGTERM', () => natsWraper.client.close());
+
+        new BuildingCreatedListener(natsWraper.client).listen();
+        new UserCreatedListener(natsWraper.client).listen();
+        new BuildingDeletedListener(natsWraper.client).listen();
+        
         await mongoose.connect(process.env.MONGO_URI);
         console.log('Connected to mongoDB');
     } catch(err) {

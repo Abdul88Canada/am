@@ -5,6 +5,8 @@ import mongoose from "mongoose";
 interface RoomAttrs {
     roomNumber: String;
     roomState: Number;
+    building_id: string;
+    user_id: [string];
 }
 
 //An interface that describes the properties
@@ -18,6 +20,8 @@ interface RoomModel extends mongoose.Model<RoomDoc> {
 interface RoomDoc extends mongoose.Document {
     roomNumber: String;
     roomState: Number;
+    building_id: string;
+    user_id: [string];
 }
 
 const roomSchema = new mongoose.Schema({
@@ -28,6 +32,12 @@ const roomSchema = new mongoose.Schema({
     roomState: {
         type: Number,
         required: true
+    },
+    building_id: {
+        type: String
+    },
+    user_id: {
+        type: [String]
     }
 }, {
     toJSON: {

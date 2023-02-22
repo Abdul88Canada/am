@@ -5,15 +5,15 @@ import mongoose from "mongoose";
 interface BuildingAttrs {
     name: String;
     location: String;
-    viewersId: [String];
+    user_id: String
 }
 
 //An interface that describes the properties
 //that a building document has
-interface BuildingDoc extends mongoose.Document {
+export interface BuildingDoc extends mongoose.Document {
     name: String;
     location: String;
-    viewersId: [String];
+    user_id: [String]
 }
 
 //An interface that describes the properties
@@ -23,15 +23,15 @@ interface BuildingModel extends mongoose.Model<BuildingDoc> {
 }
 
 const buildingSchema = new mongoose.Schema({
+    user_id: {
+        type: [String]
+    },
     name: {
         type: String,
         required: true
     },
     location: {
         type: String
-    },
-    viewersId: {
-        type: [String]
     }
 }, {
         toJSON: {

@@ -3,7 +3,9 @@ import { body } from 'express-validator';
 import jwt  from 'jsonwebtoken';
 import { validateRequest, BadRequestError } from '@ampdev/common';
 
-import { User } from '../models/user';
+import { Users } from '../models/users';
+import { Authentication } from '../models/authentication';
+
 import { Password } from '../services/password';
 
 
@@ -19,7 +21,7 @@ router.post('/api/users/signin', [
     async (req: Request, res: Response) => {
         const { userName, password } = req.body;
     
-        const existingUser = await User.findOne({ userName });
+        const existingUser = await Authentication.findOne({ userName });
 
         if (!existingUser) {
             throw new BadRequestError('Invalid credentials');
@@ -37,7 +39,6 @@ router.post('/api/users/signin', [
             email: existingUser.email,
             phoneNumber: existingUser.phoneNumber,
             userName: existingUser.userName,
-            userType: existingUser.userType
         }, process.env.JWT_KEY!);
 
         // store it on session object

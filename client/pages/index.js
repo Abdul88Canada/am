@@ -1,29 +1,41 @@
-import buildClient from '../api/build-client';
+import { useState } from "react"
 
 import RoomList from '../components/rooms/roomList';
-import BuildingList from '../components/buildings/buildingList';
 
-const LandingPage =  ({ data/*, buildings */}) => {
-    const buildings = (currentUser) => {
-        if (!currentUser.buildings) {
-            return 0;
-        }
-        else {
-            return currentUser.buildings.length;
-        }
-    }
+const LandingPage =  ({ buildings, currentUser }) => {   
+
+    const [index, setIndex] = useState(0);
+
     return (
-        data.currentUser ? <div>You have {buildings(data.currentUser)}</div> : <h1>You are signed out</h1>
+        currentUser ? (
+            <div>
+                Welcome, {currentUser.userName}!
+                <div>
+                    <div className="field">  
+                        <select className="ui dropdown" onChange= {e => {
+                            setIndex(e.target.options.selectedIndex);
+                            }} >
+                            {buildings.map((building) => {
+                                return <option name="building" value={building.id} key={building.id}>{building.name}</option>
+                            })}
+                        </select>
+                    </div>
+                </div>
+                <RoomList rooms = {buildings[index]?.rooms}/>
+            </div>
+        ) 
+            : <h1>You are signed out</h1>
     )
 };
 
-LandingPage.getInitialProps = async (context) => {
-    
-    const client = buildClient(context);
-    const { data } = await client.get('/api/users/currentuser');
-    //const rooms = await client.get('/api/buildings/:id');
-    console.log(data.currentUser);
-    return {data/*, rooms: rooms.data*/};
+LandingPage.getInitialProps = async (context, client, currentUser) => {
+   if(!currentUser) {
+    return {}
+   } 
+   else {
+    const { data } = await client.get('/api/rooms/buildings');
+    return {buildings: data};
+   }
 }
 
 export default LandingPage;
