@@ -59,4 +59,4 @@ router.post('/api/users/add-user', [
         res.status(201).send(auth);
 });
 
-export { router as addUserRoute };
+export { router as addUserRouter };
