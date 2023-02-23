@@ -17,3 +17,4 @@ export * from './events/property-created-event';
 export * from './events/property-deleted-event';
 export * from './events/user-created-event';
 export * from './events/unit-deleted-event';
+export * from './events/owner-created-event';
