@@ -14,7 +14,7 @@ import { deleteUnit } from './routes/delete-unit';
 import { natsWraper } from './nats-wrapper';
 import { PropertyCreatedListener } from './events/listeners/property-created-listener';
 import { PropertyDeletedListener } from './events/listeners/property-deleted-listener';
-import { UserCreatedListener } from './events/listeners/user-created-listener';
+import { OwnerCreatedListener } from './events/listeners/owner-created-listener';
 
 const app = express();
 
@@ -73,7 +73,7 @@ const start = async () => {
         process.on('SIGTERM', () => natsWraper.client.close());
 
         new PropertyCreatedListener(natsWraper.client).listen();
-        new UserCreatedListener(natsWraper.client).listen();
+        new OwnerCreatedListener(natsWraper.client).listen();
         new PropertyDeletedListener(natsWraper.client).listen();
         
         await mongoose.connect(process.env.MONGO_URI);

@@ -1,15 +1,15 @@
 import { Message } from "node-nats-streaming";
-import { Subjects, Listener, UserCreatedEvent } from "@ampdev/common";
+import { Subjects, Listener, OwnerCreatedEvent } from "@ampdev/common";
 
 import { qGroupNameAuth } from "./q-group-name";
 import { Users } from "../../models/users";
 
-export class UserCreatedListener extends Listener<UserCreatedEvent> {
-    subject: Subjects.UserCreated = Subjects.UserCreated;
+export class OwnerCreatedListener extends Listener<OwnerCreatedEvent> {
+    subject: Subjects.OwnerCreated = Subjects.OwnerCreated;
     qGroupName = qGroupNameAuth;
 
-    async onMessage(data: UserCreatedEvent['data'], msg: Message) {
-        console.log('Data from User Created Listener from Units service: ', data);
+    async onMessage(data: OwnerCreatedEvent['data'], msg: Message) {
+        console.log('Data from Owner Created Listener from Units service: ', data);
         const {user_id, full_name, user_type, created_at} = data;
  
         const user = Users.build({user_id, full_name, user_type, created_at});

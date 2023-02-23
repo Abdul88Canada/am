@@ -9,6 +9,7 @@ import { currentUserRouter } from './routes/currentuser';
 import { signinRouter } from './routes/signin';
 import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
+import { addUserRoute } from './routes/add-user';
 import { natsWraper } from './nats-wrapper';
 
 const app = express();
@@ -28,6 +29,7 @@ app.use(currentUserRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
 app.use(signupRouter);
+app.use(addUserRoute);
 
 app.get('*', async (req, res) => {
     throw new NotFoundError();
