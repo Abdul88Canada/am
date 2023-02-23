@@ -1,5 +1,5 @@
 import nats from 'node-nats-streaming';
-import { BuildingCreatedPublisher } from './events/building-created-publisher';
+import { PropertyCreatedPublisher } from './events/property-created-publisher';
 
 console.clear();
 
@@ -10,7 +10,7 @@ const stan = nats.connect('amp', 'abc', {
 // it emmits a connect event and we listen to it here
 stan.on('connect', async () => {
     console.log('Publisher connected to NATs');
-    const publisher = new BuildingCreatedPublisher(stan);
+    const publisher = new PropertyCreatedPublisher(stan);
 
     try {
         await publisher.publish({
@@ -27,7 +27,7 @@ stan.on('connect', async () => {
         location: "dammam"
     });
 
-    stan.publish('building:created', data, () => {
+    stan.publish('property:created', data, () => {
         console.log('Event published');
     })*/
 });

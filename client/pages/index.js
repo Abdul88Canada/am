@@ -1,8 +1,8 @@
 import { useState } from "react"
 
-import RoomList from '../components/rooms/roomList';
+import UnitList from '../components/units/unitList';
 
-const LandingPage =  ({ buildings, currentUser }) => {   
+const LandingPage =  ({ properties, currentUser }) => {   
 
     const [index, setIndex] = useState(0);
 
@@ -15,13 +15,13 @@ const LandingPage =  ({ buildings, currentUser }) => {
                         <select className="ui dropdown" onChange= {e => {
                             setIndex(e.target.options.selectedIndex);
                             }} >
-                            {buildings.map((building) => {
-                                return <option name="building" value={building.id} key={building.id}>{building.name}</option>
+                            {properties.map((property) => {
+                                return <option name="property" value={property.id} key={property.id}>{property.name}</option>
                             })}
                         </select>
                     </div>
                 </div>
-                <RoomList rooms = {buildings[index]?.rooms}/>
+                <UnitList units = {properties[index]?.units}/>
             </div>
         ) 
             : <h1>You are signed out</h1>
@@ -33,8 +33,8 @@ LandingPage.getInitialProps = async (context, client, currentUser) => {
     return {}
    } 
    else {
-    const { data } = await client.get('/api/rooms/buildings');
-    return {buildings: data};
+    const { data } = await client.get('/api/units/properties');
+    return {properties: data};
    }
 }
 

@@ -1,7 +1,7 @@
 import { randomBytes } from 'crypto';
 import nats from 'node-nats-streaming';
 
-import { BuildingCreatedListener } from './events/buidling-created-listener';
+import { PropertyCreatedListener } from './events/buidling-created-listener';
 
 console.clear();
 
@@ -14,5 +14,5 @@ stan.on('connect', () => {
 
     
     
-    new BuildingCreatedListener(stan).listen();
+    new PropertyCreatedListener(stan).listen();
 });

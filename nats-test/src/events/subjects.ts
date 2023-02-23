@@ -1,4 +1,4 @@
 export enum Subjects {
-    BuildingCreated = 'building:created',
+    PropertyCreated = 'property:created',
     UserCreated = 'user:created'
 }

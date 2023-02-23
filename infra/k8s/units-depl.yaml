@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: units-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: units
+  template:
+    metadata:
+      labels: 
+        app: units
+    spec:
+      containers:
+        - name: units
+          image: us.gcr.io/amp-dev-376317/units
+          env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: 'http://nats-srv:4222'
+            - name: NATS_CLUSTER_ID
+              value: 'amp'
+            - name: MONGO_URI
+              value: mongodb://units-mongo-srv:27017/units
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: jwr 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: units-srv
+spec:
+  selector:
+    app: units
+  ports:
+    - name: units
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
