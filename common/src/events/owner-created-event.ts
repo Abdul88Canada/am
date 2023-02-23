@@ -1,13 +1,12 @@
 import { Subjects } from "./subjects";
 import mongoose from "mongoose";
 
-export interface UserCreatedEvent {
-    subject: Subjects.UserCreated;
+export interface OwnerCreatedEvent {
+    subject: Subjects.OwnerCreated;
     data: {
         user_id: String,
         full_name: string,
         user_type: string,
-        created_at: Date,
-        owner_id: String
+        created_at: Date
     }
 }

@@ -4,5 +4,7 @@ export enum Subjects {
     
     UserCreated = 'user:created',
 
+    OwnerCreated = 'owner:created',
+    
     UnitDeleted = 'unit:deleted'
 }
