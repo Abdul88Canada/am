@@ -47,10 +47,11 @@ const AddUser =  ({users, currentUser}) => {
                 <label>Username</label>
                 <input  value={userName} onChange={e => setUserName(e.target.value)} className="form-control"/>
             </div>
+            
             {errors}
             <button className="btn btn-primary">Add user</button>
             </form>
-            
+            <UserList />
         </div>
     )
 }
@@ -60,9 +61,9 @@ AddUser.getInitialProps = async (context, client, currentUser) => {
      return {}
     } 
     else {
-        const { data } = await client.get('/api/users/getUsers');
-     
-     return {users: data};
+        //const { data } = await client.get('/api/users/getUsers');
+        //console.log('DATA IS: ', data);
+     return {/*users: data*/};
     }
  }
 

@@ -6,14 +6,18 @@ import { Users } from "../models/users";
 const router = express.Router();
 
 router.get('/api/users/getUsers', requireAuth, async (req: Request, res: Response) => {
-    console.log('FROM THE AUTH SERVICE IN GET USERS WITH USER: ', req.currentUser!.id);
-    const users = await Users.find({owner_id: req.currentUser!.id});
+    try {
+        console.log('FROM THE AUTH SERVICE IN GET USERS WITH USER: ', req.currentUser!.id);
+        const users = await Users.find({owner_id: req.currentUser!.id});
 
-    if(!users) {
-        throw new NotFoundError();
+        if(!users) {
+            throw new NotFoundError();
+        }
+
+        res.send(users);
+    } catch (err) {
+        console.log('FROM THE AUTH SERVICE WITH ERROR: ', err);
     }
-
-    res.send(users);
 });
 
 export { router as getUsersRouter }
