@@ -7,6 +7,7 @@ export interface OwnerCreatedEvent {
         user_id: String,
         full_name: string,
         user_type: string,
-        created_at: Date
+        created_at: Date,
+        userName: String
     }
 }
