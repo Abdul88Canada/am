@@ -51,7 +51,7 @@ const AddUser =  ({users, currentUser}) => {
             {errors}
             <button className="btn btn-primary">Add user</button>
             </form>
-            <UserList />
+            <UserList users={users} />
         </div>
     )
 }
@@ -61,9 +61,9 @@ AddUser.getInitialProps = async (context, client, currentUser) => {
      return {}
     } 
     else {
-        //const { data } = await client.get('/api/users/getUsers');
-        //console.log('DATA IS: ', data);
-     return {/*users: data*/};
+        const { data } = await client.get('/api/users/getUsers');
+        console.log('DATA IS: ', data);
+     return {users: data};
     }
  }
 

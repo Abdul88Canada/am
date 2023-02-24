@@ -20,7 +20,7 @@ router.post('/api/users/add-user', [
     ], 
     validateRequest,
     async (req: Request, res: Response) => {
-        const { email, userName, phoneNumber, password, owner_id } = req.body;
+        const { email, userName, phoneNumber, password } = req.body;
 
         const existingEmail = await Authentication.findOne({ email });
         const existingUserName = await Authentication.findOne({ userName });
@@ -37,7 +37,6 @@ router.post('/api/users/add-user', [
         if (existingPhoneNumber) {
             throw new BadRequestError('phoneNumber in use');
         }
-
         const auth = Authentication.build({email, userName, phoneNumber, password});
         await auth.save();
 
@@ -45,9 +44,14 @@ router.post('/api/users/add-user', [
         const user_type = 'User';
         const full_name = '';
         const created_at = new Date();
-
+        const owner_id = req.currentUser!.id;
         const user = Users.build({user_id, user_type, full_name, created_at, owner_id});
-
+        await user.save(function(err){
+            if(err){
+                console.log(err);
+                return;
+            }
+        });
         new UserCreatedPublisher(natsWraper.client).publish({
             user_id,
             full_name,
@@ -55,6 +59,8 @@ router.post('/api/users/add-user', [
             created_at,
             owner_id
         });
+
+        console.log('FROM THE AUTH SERVICE IN ADD USERS CREATED USER: ', user.owner_id);
 
         res.status(201).send(auth);
 });

@@ -15,6 +15,7 @@ import { natsWraper } from './nats-wrapper';
 import { PropertyCreatedListener } from './events/listeners/property-created-listener';
 import { PropertyDeletedListener } from './events/listeners/property-deleted-listener';
 import { OwnerCreatedListener } from './events/listeners/owner-created-listener';
+import { UserCreatedListener } from './events/listeners/user-created-listener';
 
 const app = express();
 
@@ -75,6 +76,7 @@ const start = async () => {
         new PropertyCreatedListener(natsWraper.client).listen();
         new OwnerCreatedListener(natsWraper.client).listen();
         new PropertyDeletedListener(natsWraper.client).listen();
+        new UserCreatedListener(natsWraper.client).listen();
         
         await mongoose.connect(process.env.MONGO_URI);
         console.log('Connected to mongoDB');

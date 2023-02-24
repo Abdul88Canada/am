@@ -5,9 +5,9 @@ import mongoose, {Types} from "mongoose";
 interface UsersAttrs {
     user_id: String;
     user_type: String;
-    full_name: String;
+    full_name?: String;
     created_at: Date;
-    owner_id?: String;
+    owner_id?: string;
 }
 
 //An interface that describes the properties
@@ -21,9 +21,9 @@ interface UsersModel extends mongoose.Model<UsersDoc> {
 interface UsersDoc extends mongoose.Document {
     user_id: String;
     user_type: String;
-    full_name: String;
+    full_name?: String;
     created_at: Date;
-    owner_id?: String;
+    owner_id?: string;
 }
 
 const usersSchema = new mongoose.Schema({
@@ -37,7 +37,6 @@ const usersSchema = new mongoose.Schema({
     },
     full_name: {
         type: String,
-        required: true
     },
     linked_properties: {
         type: [String]
