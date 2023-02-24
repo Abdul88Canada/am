@@ -11,6 +11,7 @@ import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
 import { addUserRouter } from './routes/add-user';
 import { getUsersRouter } from './routes/list-users';
+import { showUserRouter } from './routes/show-user';
 
 import { natsWraper } from './nats-wrapper';
 
@@ -35,6 +36,7 @@ app.use(signoutRouter);
 app.use(signupRouter);
 app.use(addUserRouter);
 app.use(getUsersRouter);
+app.use(showUserRouter);
 
 app.get('*', async (req, res) => {
     throw new NotFoundError();

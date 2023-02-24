@@ -45,7 +45,7 @@ router.post('/api/users/add-user', [
         const full_name = '';
         const created_at = new Date();
         const owner_id = req.currentUser!.id;
-        const user = Users.build({user_id, user_type, full_name, created_at, owner_id});
+        const user = Users.build({user_id, user_type, full_name, created_at, owner_id, userName});
         await user.save(function(err){
             if(err){
                 console.log(err);
@@ -57,7 +57,8 @@ router.post('/api/users/add-user', [
             full_name,
             user_type,
             created_at,
-            owner_id
+            owner_id, 
+            userName
         });
 
         console.log('FROM THE AUTH SERVICE IN ADD USERS CREATED USER: ', user.owner_id);

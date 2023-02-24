@@ -47,7 +47,7 @@ router.post('/api/users/signup', [
         const full_name = '';
         const created_at = new Date();
 
-        const user = Users.build({user_id, user_type, full_name, created_at});
+        const user = Users.build({user_id, user_type, full_name, created_at, userName});
         await user.save(function(err){
             if(err){
                 console.log(err);
@@ -71,7 +71,8 @@ router.post('/api/users/signup', [
             user_id,
             full_name,
             user_type,
-            created_at
+            created_at,
+            userName
         });
 
         res.status(201).send(auth);

@@ -3,7 +3,7 @@ import UserShow from "./userShow"
 const UserList = ( {users} ) => {
     console.log('USERS: ', users);
     const renderedUsers = users?.map((user) => {
-        return <UserShow key={user.id} user={user} />
+        return <UserShow key={user.user_id} user={user} />
     })
 
     return (

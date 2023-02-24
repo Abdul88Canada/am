@@ -9,6 +9,7 @@ interface UsersAttrs {
     user_type: String;
     full_name?: String;
     created_at: Date;
+    userName: String;
     linked_properties?: [String];
     owner_id?: String;
 }
@@ -26,6 +27,7 @@ interface UsersDoc extends mongoose.Document {
     user_type: String;
     full_name?: String;
     created_at: Date;
+    userName: String;
     linked_properties?: [String];
     owner_id?: String;
 }
@@ -50,6 +52,9 @@ const usersSchema = new mongoose.Schema({
         type: Date
     },
     owner_id: {
+        type: String
+    },
+    userName: {
         type: String
     }
 }, {
