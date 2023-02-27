@@ -9,6 +9,7 @@ interface UsersAttrs {
     userName: String;
     created_at: Date;
     owner_id?: string;
+    linked_properties?: [String];
 }
 
 //An interface that describes the properties
@@ -26,6 +27,7 @@ interface UsersDoc extends mongoose.Document {
     created_at: Date;
     userName: String;
     owner_id?: string;
+    linked_properties?: [String];
 }
 
 const usersSchema = new mongoose.Schema({
