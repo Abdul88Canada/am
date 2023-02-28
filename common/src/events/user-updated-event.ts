@@ -8,6 +8,7 @@ export interface UserUpdatedEvent {
         user_type: string,
         created_at: Date,
         owner_id: String,
-        userName: String
+        userName: String,
+        linked_properties: [String]
     }
 }
