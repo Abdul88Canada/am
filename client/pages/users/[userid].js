@@ -6,7 +6,7 @@ import useRequest from "../../hooks/use-request";
 const UserDetails = ({currentUser, user, properties}) => {
     const [selectedProperties, setSelectedProperties] = useState(user?.linked_properties);
     const userid = user?.user_id;
-    
+
     const { doRequest, errors } = useRequest({
         url: `/api/users/${userid}`,
         method: 'put',
@@ -34,7 +34,7 @@ const UserDetails = ({currentUser, user, properties}) => {
             console.log(selectedProperties);
         }
         else {
-            //setSelectedProperties()
+            setSelectedProperties(selectedProperties.filter(i => {return i !== e.target.value} ))
         }
     }
 

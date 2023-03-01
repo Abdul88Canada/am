@@ -6,7 +6,7 @@ interface UnitAttrs {
     unitNumber: String;
     unitState: Number;
     property_id: string;
-    user_id: [string];
+    user_id: [String];
 }
 
 //An interface that describes the properties
@@ -21,7 +21,7 @@ interface UnitDoc extends mongoose.Document {
     unitNumber: String;
     unitState: Number;
     property_id: string;
-    user_id: [string];
+    user_id: [String];
 }
 
 const unitSchema = new mongoose.Schema({
