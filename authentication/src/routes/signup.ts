@@ -60,6 +60,7 @@ router.post('/api/users/signup', [
             email: auth.email,
             phoneNumber: auth.phoneNumber,
             userName: auth.userName,
+            user_type: user_type
         }, process.env.JWT_KEY!);
 
         // store it on session object
