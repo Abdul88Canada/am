@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { requireAuth, validateRequest } from "@ampdev/common";
+import { currentUser, requireAuth, validateRequest, NotAuthorizedError } from "@ampdev/common";
 import { body } from "express-validator";
 
 import { Property } from "../models/properties";

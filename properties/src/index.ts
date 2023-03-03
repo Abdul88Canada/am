@@ -12,7 +12,9 @@ import { listPropertiesRouter } from './routes/list-property';
 import { deletePropertyRouter } from './routes/delete-property';
 
 import { natsWraper } from './nats-wrapper';
+import { OwnerCreatedListener } from './events/listeners/owner-created-listener';
 import { UserCreatedListener } from './events/listeners/user-created-listener';
+import { UserUpdatedListener } from './events/listeners/user-updated-listener';
 
 const app = express();
 
@@ -72,7 +74,9 @@ const start = async () => {
         process.on('SIGINT', () => natsWraper.client.close());
         process.on('SIGTERM', () => natsWraper.client.close());
 
+        new OwnerCreatedListener(natsWraper.client).listen();
         new UserCreatedListener(natsWraper.client).listen();
+        new UserUpdatedListener(natsWraper.client).listen();
         
         await mongoose.connect(process.env.MONGO_URI);
         console.log('Connected to mongoDB');

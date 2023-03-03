@@ -3,12 +3,17 @@ import { json } from 'body-parser';
 import 'express-async-errors';
 import mongoose from 'mongoose';
 import cookieSession from 'cookie-session';
-import { errorHandler, NotFoundError  } from '@ampdev/common';
+import { currentUser, errorHandler, NotFoundError  } from '@ampdev/common';
 
 import { currentUserRouter } from './routes/currentuser';
 import { signinRouter } from './routes/signin';
 import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
+import { addUserRouter } from './routes/add-user';
+import { getUsersRouter } from './routes/list-users';
+import { showUserRouter } from './routes/show-user';
+import { updateUserRouter } from './routes/update-user';
+
 import { natsWraper } from './nats-wrapper';
 
 const app = express();
@@ -24,10 +29,16 @@ app.use(
     })
 )
 
+app.use(currentUser);
+
 app.use(currentUserRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
 app.use(signupRouter);
+app.use(addUserRouter);
+app.use(getUsersRouter);
+app.use(showUserRouter);
+app.use(updateUserRouter);
 
 app.get('*', async (req, res) => {
     throw new NotFoundError();

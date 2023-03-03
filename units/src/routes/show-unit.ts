@@ -1,5 +1,5 @@
 import express, { Request, Response} from 'express';
-import { NotFoundError, requireAuth } from '@ampdev/common';
+import { NotFoundError, requireAuth, NotAuthorizedError } from '@ampdev/common';
 
 import { Unit } from '../models/unit';
 
@@ -13,7 +13,7 @@ router.get('/api/units/:id', requireAuth,
         if (!unit) {
             throw new NotFoundError();
         }
-        
+
         res.status(200).send(unit);
 });
 

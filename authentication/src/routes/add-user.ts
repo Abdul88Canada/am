@@ -1,16 +1,15 @@
 import express, { Request, Response} from 'express';
 import { body } from 'express-validator';
-import jwt  from 'jsonwebtoken';
-import { BadRequestError, validateRequest } from '@ampdev/common';
+import { BadRequestError, validateRequest, NotAuthorizedError } from '@ampdev/common';
 
 import { Users } from '../models/users';
 import { Authentication } from '../models/authentication';
-import { OwnerCreatedPublisher } from '../events/publishers/owner-created-publisher';
+import { UserCreatedPublisher } from '../events/publishers/user-created-publisher';
 import { natsWraper } from "../nats-wrapper";
 
 const router = express.Router();
 
-router.post('/api/users/signup', [
+router.post('/api/users/add-user', [
     body('email')
         .isEmail()
         .withMessage('Email must be valid'),
@@ -43,40 +42,31 @@ router.post('/api/users/signup', [
         await auth.save();
 
         const user_id = auth.id;
-        const user_type = 'Owner';
+        const user_type = 'User';
         const full_name = '';
         const created_at = new Date();
+        const owner_id = req.currentUser!.id;
 
-        const user = Users.build({user_id, user_type, full_name, created_at, userName});
+        const user = Users.build({user_id, user_type, full_name, created_at, owner_id, userName});
+
         await user.save(function(err){
             if(err){
                 console.log(err);
                 return;
             }
         });
-        // generate JWT
-        const userJwt = jwt.sign({
-            id: auth.id,
-            email: auth.email,
-            phoneNumber: auth.phoneNumber,
-            userName: auth.userName,
-            user_type: user_type
-        }, process.env.JWT_KEY!);
-
-        // store it on session object
-        req.session = {
-            jwt: userJwt
-        };
-
-        new OwnerCreatedPublisher(natsWraper.client).publish({
+        new UserCreatedPublisher(natsWraper.client).publish({
             user_id,
             full_name,
             user_type,
             created_at,
+            owner_id, 
             userName
         });
+
+        console.log('FROM THE AUTH SERVICE IN ADD USERS CREATED USER: ', user.owner_id);
 
         res.status(201).send(auth);
 });
 
-export { router as signupRouter };
+export { router as addUserRouter };

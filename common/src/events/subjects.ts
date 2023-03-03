@@ -3,6 +3,9 @@ export enum Subjects {
     PropertyDeleted = 'property:deleted',
     
     UserCreated = 'user:created',
+    UserUpdated = 'user:updated',
 
+    OwnerCreated = 'owner:created',
+    
     UnitDeleted = 'unit:deleted'
 }

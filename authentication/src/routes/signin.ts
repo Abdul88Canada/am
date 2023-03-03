@@ -33,12 +33,13 @@ router.post('/api/users/signin', [
             throw new BadRequestError('Invalid credentials');
         }
 
+        const user = await Users.findOne({ userName })
+
         // generate JWT
         const userJwt = jwt.sign({
-            id: existingUser.id,
-            email: existingUser.email,
-            phoneNumber: existingUser.phoneNumber,
-            userName: existingUser.userName,
+            id: user!.user_id,
+            userName: user!.userName,
+            user_type: user!.user_type
         }, process.env.JWT_KEY!);
 
         // store it on session object

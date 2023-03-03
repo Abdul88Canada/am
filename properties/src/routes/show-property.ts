@@ -12,6 +12,10 @@ router.get('/api/properties/:id', requireAuth, async (req: Request, res: Respons
         throw new NotFoundError();
     }
 
+    if(req.currentUser?.id !== property.user_id.toString()) {
+        throw new NotAuthorizedError();
+    }
+
     res.status(200).send(property);
 });
 

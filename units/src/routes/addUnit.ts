@@ -19,14 +19,8 @@ router.post('/api/units/addUnit', [
 
         const unit = Unit.build({unitNumber, unitState, property_id: selectedProperty, user_id});
         await unit.save();
-
-        console.log('FROM UNITS SERVICE CREATED UNIT ', unit);
-
-        console.log('FROM UNITS SERVICE UPDATED PROPERTY', selectedProperty);
         
         const property = await Property.updateOne({id: selectedProperty}, {$push: {units: unit}});
-
-        console.log('FROM UNITS SERVICE UPDATED PROPERTY', property);
 
         res.status(201).send(unit);
 });

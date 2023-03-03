@@ -10,9 +10,9 @@ export class UserCreatedListener extends Listener<UserCreatedEvent> {
 
     async onMessage(data: UserCreatedEvent['data'], msg: Message) {
         console.log('Data from User Created Listener from Property service: ', data);
-        const {user_id, full_name, user_type, created_at} = data;
+        const {user_id, full_name, user_type, created_at, owner_id, userName} = data;
  
-        const user = Users.build({user_id, full_name, user_type, created_at});
+        const user = Users.build({user_id, full_name, user_type, created_at, owner_id, userName});
         await user.save();
         console.log(user);
         msg.ack();
