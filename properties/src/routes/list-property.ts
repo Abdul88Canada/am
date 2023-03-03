@@ -18,10 +18,11 @@ router.get('/api/properties', requireAuth, async (req: Request, res: Response) =
         const list = user?.linked_properties;
 
         const properties = await Property.find( { _id: {$in: list} } );
-        console.log('FROM THE PROPERTY SERVICE FETCHED PROPERTIES : ', properties);
+
         if(!properties) {
             throw new NotFoundError();
         }
+        
         res.send(properties);
     } catch (error) {
         console.log('FROM THE PROPERTY SERVICE WITH ERROR: ', error)

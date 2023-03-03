@@ -15,6 +15,10 @@ router.put('/api/properties/:id', requireAuth, async (req: Request, res: Respons
         throw new NotFoundError();
     }
 
+    if(req.currentUser?.id !== property.user_id.toString()) {
+        throw new NotAuthorizedError();
+    }
+
     const user = await Users.findById({user_id: user_id});
 
     if(!user) {

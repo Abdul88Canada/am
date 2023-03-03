@@ -22,7 +22,10 @@ router.delete('/api/properties/:id', requireAuth, async (req: Request, res: Resp
             throw new NotFoundError();
         }
 
-        console.log('FROM DELETE PROPERTY IN PROPERTY SERVICE WITH ', property);
+        if(req.currentUser?.id !== property.user_id.toString()) {
+            throw new NotAuthorizedError();
+        }
+
         await Property.deleteOne({id: req.params.id});
 
         await Users.updateOne({user_id}, {$pull: {linked_properties: req.params.id}});

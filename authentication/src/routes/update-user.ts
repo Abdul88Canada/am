@@ -1,5 +1,5 @@
 import express, { Request, Response} from 'express';
-import { validateRequest, requireAuth } from '@ampdev/common';
+import { requireAuth, NotAuthorizedError } from '@ampdev/common';
 
 import { Users } from '../models/users';
 import { UserUpdatedPublisher } from '../events/publishers/user-updated-publisher';
@@ -10,6 +10,10 @@ const router = express.Router();
 router.put('/api/users/:id', requireAuth, async (req: Request, res: Response) => {
 
         const { user } = req.body;
+
+        if(req.currentUser?.id !== user.owner_id) {
+                throw new NotAuthorizedError();
+        }
 
         await Users.findOneAndUpdate({user_id: user.user_id}, {linked_properties: user.linked_properties} )
 
