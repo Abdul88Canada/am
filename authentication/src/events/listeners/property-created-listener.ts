@@ -10,7 +10,7 @@ export class PropertyCreatedListener extends Listener<PropertyCreatedEvent> {
     qGroupName = qGroupName;
 
     async onMessage(data: PropertyCreatedEvent['data'], msg: Message) {
-        console.log('Data from Property Created Listener from Units service: ', data);
+        console.log('Data from Property Created Listener from Auth service: ', data);
         const {id, name, location, user_id} = data;
         
         const property = await Property.build({id, name, location});

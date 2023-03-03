@@ -24,10 +24,6 @@ router.put('/api/properties/:id', requireAuth, async (req: Request, res: Respons
     if(!user) {
         throw new NotFoundError();
     }
-
-    if (user.user_id.toString() !== req.currentUser!.id) {
-        throw new NotAuthorizedError();
-    }
     
     await Property.updateOne({id: req.params.id}, {$set: {name, location}});
     res.send(property);
