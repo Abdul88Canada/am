@@ -1,6 +1,6 @@
 import express, { Request, Response} from 'express';
 import { body } from 'express-validator';
-import { BadRequestError, validateRequest } from '@ampdev/common';
+import { BadRequestError, validateRequest, NotAuthorizedError } from '@ampdev/common';
 
 import { Users } from '../models/users';
 import { Authentication } from '../models/authentication';
@@ -22,6 +22,10 @@ router.post('/api/users/add-user', [
     async (req: Request, res: Response) => {
         const { email, userName, phoneNumber, password } = req.body;
 
+        if (req.currentUser?.userType !== 'Owner') {
+            throw new NotAuthorizedError();
+        }
+
         const existingEmail = await Authentication.findOne({ email });
         const existingUserName = await Authentication.findOne({ userName });
         const existingPhoneNumber = await Authentication.findOne({ phoneNumber });
@@ -37,6 +41,7 @@ router.post('/api/users/add-user', [
         if (existingPhoneNumber) {
             throw new BadRequestError('phoneNumber in use');
         }
+
         const auth = Authentication.build({email, userName, phoneNumber, password});
         await auth.save();
 
@@ -45,7 +50,9 @@ router.post('/api/users/add-user', [
         const full_name = '';
         const created_at = new Date();
         const owner_id = req.currentUser!.id;
+
         const user = Users.build({user_id, user_type, full_name, created_at, owner_id, userName});
+
         await user.save(function(err){
             if(err){
                 console.log(err);

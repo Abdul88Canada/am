@@ -12,6 +12,10 @@ router.delete('/api/properties/:id', requireAuth, async (req: Request, res: Resp
     try {
         const { user_id } = req.body;
 
+        if (req.currentUser?.userType !== 'Owner') {
+            throw new NotAuthorizedError();
+        }
+
         const property = await Property.findById(req.params.id);
 
         if(!property) {

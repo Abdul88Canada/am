@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { requireAuth, validateRequest } from "@ampdev/common";
+import { currentUser, requireAuth, validateRequest, NotAuthorizedError } from "@ampdev/common";
 import { body } from "express-validator";
 
 import { Property } from "../models/properties";
@@ -16,6 +16,10 @@ router.post('/api/properties', requireAuth, [
         .withMessage('Provide a property name')
 ], validateRequest, async (req: Request, res: Response) => {
     const { name, location, user_id } = req.body;
+
+    if (req.currentUser?.userType !== 'Owner') {
+        throw new NotAuthorizedError();
+    }
 
     try {
         const property = Property.build({ name, location, user_id });

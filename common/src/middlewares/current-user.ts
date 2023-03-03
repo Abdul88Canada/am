@@ -6,7 +6,7 @@ interface UserPayload {
     email: string;
     phoneNumber: number;
     userName: string;
-    userType: string;
+    user_type: string;
 }
 
 declare global {
