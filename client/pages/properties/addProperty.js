@@ -3,6 +3,7 @@ import  Router from 'next/router';
 
 import useRequest from "../../hooks/use-request";
 import PropertyList from '../../components/properties/propertyList';
+import SettingsHeader from "../settings/settingsHeader";
 
 const AddProperty = ({currentUser, properties}) => {
     const [name, setName] = useState('');
@@ -27,6 +28,7 @@ const AddProperty = ({currentUser, properties}) => {
 
     return (
         <div>
+                <SettingsHeader currentUser={currentUser}/>
                 <form onSubmit={onSubmit}>
                     <h1>Add Property</h1>
                     <div className="form-group">

@@ -2,6 +2,7 @@ import { useState } from "react"
 import  Router from 'next/router';
 
 import useRequest from "../../hooks/use-request";
+import SettingsHeader from "../settings/settingsHeader";
 
 const AddUnit =  ({properties, currentUser}) => {
     
@@ -29,6 +30,7 @@ const AddUnit =  ({properties, currentUser}) => {
         properties.length > 0 ?
         (
             <div>
+                <SettingsHeader />
                 <div className="field">  
                     <select className="ui dropdown" onChange= {e => {setSelectedProperty(e.target.value)}} >
                         {properties.map((property) => {
@@ -47,7 +49,11 @@ const AddUnit =  ({properties, currentUser}) => {
                 </form>
             </div>
         )
-        : <h1>You have no properties. Please add one.</h1>
+        : 
+        <div>
+            <SettingsHeader currentUser={currentUser}/>
+            <h1>You have no properties. Please add one.</h1>
+        </div>
     );
 }
 

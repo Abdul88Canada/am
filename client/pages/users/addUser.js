@@ -3,6 +3,7 @@ import  Router from 'next/router';
 
 import useRequest from "../../hooks/use-request";
 import UserList from '../../components/users/userList';
+import SettingsHeader from "../settings/settingsHeader";
 
 const AddUser =  ({users, currentUser}) => {
     const [email, setEmail] = useState('');
@@ -29,6 +30,7 @@ const AddUser =  ({users, currentUser}) => {
 
     return (
         <div>
+            <SettingsHeader currentUser={currentUser}/>
             <form onSubmit={onSubmit}>
             <h1>Add a user</h1>
             <div className="form-group">
