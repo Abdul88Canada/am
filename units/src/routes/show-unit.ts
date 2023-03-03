@@ -13,10 +13,6 @@ router.get('/api/units/:id', requireAuth,
         if (!unit) {
             throw new NotFoundError();
         }
-        
-        if (!unit.user_id.find(user => user !== req.currentUser?.id)) {
-            throw new NotAuthorizedError();
-        }
 
         res.status(200).send(unit);
 });

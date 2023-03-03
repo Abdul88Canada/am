@@ -16,10 +16,6 @@ router.delete('/api/units/:id', requireAuth,
             if (!unit) {
                 throw new NotFoundError();
             }
-
-            if (!unit.user_id.find(user => user !== req.currentUser?.id)) {
-                throw new NotAuthorizedError();
-            }
             
             const propertyBU = await Property.findOne({id: unit!.property_id});
             const property = await Property.updateOne({id: unit!.property_id}, {$pull: {units: {_id: unit!._id}}});

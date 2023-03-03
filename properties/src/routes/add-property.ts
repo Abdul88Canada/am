@@ -17,10 +17,6 @@ router.post('/api/properties', requireAuth, [
 ], validateRequest, async (req: Request, res: Response) => {
     const { name, location, user_id } = req.body;
 
-    if (req.currentUser?.userType !== 'Owner') {
-        throw new NotAuthorizedError();
-    }
-
     try {
         const property = Property.build({ name, location, user_id });
         await property.save();

@@ -22,10 +22,6 @@ router.post('/api/users/add-user', [
     async (req: Request, res: Response) => {
         const { email, userName, phoneNumber, password } = req.body;
 
-        if (req.currentUser?.userType !== 'Owner') {
-            throw new NotAuthorizedError();
-        }
-
         const existingEmail = await Authentication.findOne({ email });
         const existingUserName = await Authentication.findOne({ userName });
         const existingPhoneNumber = await Authentication.findOne({ phoneNumber });
