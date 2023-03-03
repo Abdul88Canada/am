@@ -11,8 +11,11 @@ const LandingPage =  ({ properties, currentUser }) => {
             <div>
                 Welcome, {currentUser.userName}!
                 <div>
-                    <div className="field">  
-                        <select className="ui dropdown" onChange= {e => {
+                    <div className="input-group mb-3">  
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Property:</label>
+                        </div>
+                        <select className="custom-select" onChange= {e => {
                             setIndex(e.target.options.selectedIndex);
                             }} >
                             {properties.map((property) => {

@@ -6,7 +6,9 @@ const UnitList = ( {units} ) => {
     })
 
     return (
-        <div>{renderedUnits}</div>
+        <div className="card-group">
+            {renderedUnits}
+        </div>
     );
 }
 

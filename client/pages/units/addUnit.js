@@ -30,9 +30,12 @@ const AddUnit =  ({properties, currentUser}) => {
         properties.length > 0 ?
         (
             <div>
-                <SettingsHeader />
-                <div className="field">  
-                    <select className="ui dropdown" onChange= {e => {setSelectedProperty(e.target.value)}} >
+                <SettingsHeader currentUser={currentUser}/>
+                <div className="input-group mb-3">  
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Property:</label>
+                        </div>
+                        <select className="custom-select" onChange= {e => {setSelectedProperty(e.target.value)}} >
                         {properties.map((property) => {
                             return <option name="property" value={property.id} key={property.id}>{property.name}</option>
                         })}

@@ -5,7 +5,7 @@ export default ({ currentUser }) => {
     const links = [
         !currentUser && {label: 'Sign Up', href: '/authentication/signup'},
         !currentUser && {label: 'Sign In', href: '/authentication/signin'},
-        currentUser && {label: 'Settings', href: '/settings/settings'},
+        currentUser && {label: 'Settings', href: '/settings/settingsHeader'},
         /*currentUser && {label: 'Add Unit', href: '/units/addUnit'},
         currentUser && currentUser.user_type === 'Owner' && {label: 'Add User', href: '/users/addUser'},
         currentUser && currentUser.user_type === 'Owner' && {label: 'Add Property', href: '/properties/addProperty'},*/

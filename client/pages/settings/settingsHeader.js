@@ -22,7 +22,7 @@ const SettingsHeader = ({currentUser}) => {
     });
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">                
                  <div className="d-flex justify-content-end" id="navbarSupportedContent">
                     <ul className="navbar-nav justify-content-end">
