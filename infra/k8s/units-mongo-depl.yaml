@@ -1,9 +1,10 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: units-mongo-depl
 spec:
   replicas: 1
+  serviceName: units-mongo-depl
   selector:
     matchLabels:
       app: units-mongo
@@ -15,6 +16,20 @@ spec:
       containers:
         - name: units-mongo
           image: mongo
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: units-mongo-data
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: units-mongo-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 500Mi
 ---
 apiVersion: v1
 kind: Service

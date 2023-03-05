@@ -1,9 +1,10 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: authenication-mongo-depl
 spec:
   replicas: 1
+  serviceName: authenication-mongo
   selector:
     matchLabels:
       app: authenication-mongo
@@ -15,6 +16,20 @@ spec:
       containers:
         - name: authenication-mongo
           image: mongo
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: authenication-mongo-data
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: authenication-mongo-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 500Mi
 ---
 apiVersion: v1
 kind: Service
