@@ -31,6 +31,7 @@ const AddUnit =  ({properties, currentUser}) => {
         (
             <div>
                 <SettingsHeader currentUser={currentUser}/>
+                <h1>Add unit</h1>
                 <div className="input-group mb-3">  
                         <div class="input-group-prepend">
                             <label class="input-group-text" for="inputGroupSelect01">Property:</label>
@@ -42,7 +43,6 @@ const AddUnit =  ({properties, currentUser}) => {
                     </select>
                 </div>
                 <form onSubmit={onSubmit}>
-                    <h1>Add unit</h1>
                     <div className="form-group">
                         <label>Unit Number</label>
                         <input value={unitNumber} onChange={e => setUnitNumber(e.target.value)} className="form-control"/>

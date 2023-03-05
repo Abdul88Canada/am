@@ -2,11 +2,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 const SettingsHeader = ({currentUser}) => {
-    const [activeTab, setActiveTab] = useState();
-
-    const clicked = (e) => {
-        console.log('Clicked! ', e.target);
-    }
+    const [activeTab, setActiveTab] = useState('');
 
     const links = [
         currentUser && {label: 'Add Unit', href: '/units/addUnit'},
@@ -15,7 +11,7 @@ const SettingsHeader = ({currentUser}) => {
     ].filter(linkConfig => linkConfig)
     .map(({ label, href }) => {
         return (
-        <li key={href} className="nav-item" onClick={e => clicked(e)}>
+        <li key={href} className={`nav-item ${activeTab == label ? 'active' : ''}`} onClick={e => setActiveTab(label)}>
             <Link href={href} legacyBehavior><a className='nav-link'>{label}</a></Link>
         </li>
         );
@@ -23,12 +19,10 @@ const SettingsHeader = ({currentUser}) => {
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <div className="container-fluid">                
-                 <div className="d-flex justify-content-end" id="navbarSupportedContent">
-                    <ul className="navbar-nav justify-content-end">
+             <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
                         {links}
-                    </ul>
-                </div>
+                </ul>
             </div>
         </nav>
     )

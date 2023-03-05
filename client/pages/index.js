@@ -12,8 +12,8 @@ const LandingPage =  ({ properties, currentUser }) => {
                 Welcome, {currentUser.userName}!
                 <div>
                     <div className="input-group mb-3">  
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" for="inputGroupSelect01">Property:</label>
+                        <div className="input-group-prepend">
+                            <label className="input-group-text" for="inputGroupSelect01">Property:</label>
                         </div>
                         <select className="custom-select" onChange= {e => {
                             setIndex(e.target.options.selectedIndex);
