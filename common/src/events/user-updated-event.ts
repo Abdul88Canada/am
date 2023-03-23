@@ -6,7 +6,6 @@ export interface UserUpdatedEvent {
         user_id: String,
         user_type: string,
         created_at: Date,
-        userName: String,
-        campaigns: [String]
+        userName: String
     }
 }
