@@ -8,4 +8,4 @@ export interface UserUpdatedEvent {
         created_at: Date,
         userName: String
     }
-}
+} 
