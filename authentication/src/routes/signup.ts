@@ -5,12 +5,11 @@ import { BadRequestError, validateRequest } from '@ampdev/common';
 
 import { Users } from '../models/users';
 import { Authentication } from '../models/authentication';
-import { OwnerCreatedPublisher } from '../events/publishers/owner-created-publisher';
 import { natsWraper } from "../nats-wrapper";
 
 const router = express.Router();
 
-router.post('/api/users/signup', [
+router.post('/api/users/brands/signup', [
     body('email')
         .isEmail()
         .withMessage('Email must be valid'),
@@ -25,7 +24,6 @@ router.post('/api/users/signup', [
 
         const existingEmail = await Authentication.findOne({ email });
         const existingUserName = await Authentication.findOne({ userName });
-        const existingPhoneNumber = await Authentication.findOne({ phoneNumber });
 
         if (existingEmail) {
             throw new BadRequestError('Email in use');
@@ -35,19 +33,14 @@ router.post('/api/users/signup', [
             throw new BadRequestError('username in use');
         }
 
-        if (existingPhoneNumber) {
-            throw new BadRequestError('phoneNumber in use');
-        }
-
-        const auth = Authentication.build({email, userName, phoneNumber, password});
+        const auth = Authentication.build({email, userName, password});
         await auth.save();
 
         const user_id = auth.id;
-        const user_type = 'Owner';
-        const full_name = '';
+        const user_type = 'Brand';
         const created_at = new Date();
 
-        const user = Users.build({user_id, user_type, full_name, created_at, userName});
+        const user = Users.build({user_id, user_type, created_at, userName});
         await user.save(function(err){
             if(err){
                 console.log(err);
@@ -58,7 +51,6 @@ router.post('/api/users/signup', [
         const userJwt = jwt.sign({
             id: auth.id,
             email: auth.email,
-            phoneNumber: auth.phoneNumber,
             userName: auth.userName,
             user_type: user_type
         }, process.env.JWT_KEY!);
@@ -67,14 +59,6 @@ router.post('/api/users/signup', [
         req.session = {
             jwt: userJwt
         };
-
-        new OwnerCreatedPublisher(natsWraper.client).publish({
-            user_id,
-            full_name,
-            user_type,
-            created_at,
-            userName
-        });
 
         res.status(201).send(auth);
 });

@@ -1,20 +1,19 @@
 import { useState } from "react"
 import  Router from 'next/router';
 
-import useRequest from "../../hooks/use-request";
+import useRequest from "../../../hooks/use-request";
 
 export default () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [userName, setUserName] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState(0);
 
     // a hook to handle the request and if any errors happen
     const { doRequest, errors } = useRequest({
-        url: '/api/users/signup',
+        url: '/api/users/brands/signup',
         method: 'post',
         body: {
-            email, password, userName, phoneNumber
+            email, password, userName
         },
         onSuccess: () => Router.push('/')
     });
@@ -35,10 +34,6 @@ export default () => {
             <div className="form-group">
                 <label>Password</label>
                 <input type="password" value={password} onChange={e => setPassword(e.target.value)} className="form-control"/>
-            </div>
-            <div className="form-group">
-                <label>Phone Number</label>
-                <input type="number" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} className="form-control"/>
             </div>
             <div className="form-group">
                 <label>Username</label>

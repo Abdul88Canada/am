@@ -17,18 +17,11 @@ spec:
                 name: authentication-srv
                 port:
                   number: 3000
-          - path: /api/units/?(.*)
+          - path: /api/campaigns/?(.*)
             pathType: Prefix
             backend:
               service:
-                name: units-srv
-                port:
-                  number: 3000
-          - path: /api/properties/?(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: properties-srv
+                name: campaigns-srv
                 port:
                   number: 3000
           - path: /?(.*)

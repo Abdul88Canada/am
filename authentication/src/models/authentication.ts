@@ -6,7 +6,6 @@ import { Password } from "../services/password";
 //that are required to create a new user
 interface AuthenticationAttrs {
     email: String;
-    phoneNumber: Number;
     userName: String;
     password: String;
 }
@@ -21,7 +20,6 @@ interface AuthenticationModel extends mongoose.Model<AuthenticationDoc> {
 //that a user document has
 interface AuthenticationDoc extends mongoose.Document {
     email: String;
-    phoneNumber: Number;
     userName: String;
     password: String;
 }
@@ -29,10 +27,6 @@ interface AuthenticationDoc extends mongoose.Document {
 const authenticationSchema = new mongoose.Schema({
     email: {
         type: String,
-        required: true
-    },
-    phoneNumber: {
-        type: Number,
         required: true
     },
     userName: {

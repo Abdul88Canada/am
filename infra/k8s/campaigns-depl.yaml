@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: campaigns-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: campaigns
+  template:
+    metadata:
+      labels: 
+        app: campaigns
+    spec:
+      containers:
+        - name: campaigns
+          image: us.gcr.io/amp-dev-376317/campaigns
+          env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: 'http://nats-srv:4222'
+            - name: NATS_CLUSTER_ID
+              value: 'amp'
+            - name: MONGO_URI
+              value: mongodb://campaigns-mongo-srv:27017/campaigns
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: jwr 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: campaigns-srv
+spec:
+  selector:
+    app: campaigns
+  ports:
+    - name: campaigns
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

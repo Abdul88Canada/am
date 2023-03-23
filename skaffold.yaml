@@ -26,16 +26,8 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
-    - image: us.gcr.io/amp-dev-376317/units
-      context: units
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: 'src/**/*.ts'
-            dest: .
-    - image: us.gcr.io/amp-dev-376317/properties
-      context: properties
+    - image: us.gcr.io/amp-dev-376317/campaigns
+      context: campaigns
       docker:
         dockerfile: Dockerfile
       sync:
