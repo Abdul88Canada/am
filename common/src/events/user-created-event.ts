@@ -7,5 +7,5 @@ export interface UserCreatedEvent {
         user_type: string,
         created_at: Date,
         userName: String
-    }
+    } 
 }
