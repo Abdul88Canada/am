@@ -3,12 +3,9 @@ import Link from 'next/link';
 export default ({ currentUser }) => {
 
     const links = [
-        !currentUser && {label: 'Sign Up', href: '/authentication/signup'},
+        !currentUser && {label: 'Brand Sign Up', href: '/authentication/brands/signup'},
         !currentUser && {label: 'Sign In', href: '/authentication/signin'},
-        currentUser && {label: 'Settings', href: '/settings/settingsHeader'},
-        /*currentUser && {label: 'Add Unit', href: '/units/addUnit'},
-        currentUser && currentUser.user_type === 'Owner' && {label: 'Add User', href: '/users/addUser'},
-        currentUser && currentUser.user_type === 'Owner' && {label: 'Add Property', href: '/properties/addProperty'},*/
+        currentUser && {label: 'Add Campaigns', href: '/campaigns/addCampaigns'},
         currentUser && {label: 'Sign Out', href: '/authentication/signout'}
     ].filter(linkConfig => linkConfig)
     .map(({ label, href }) => {

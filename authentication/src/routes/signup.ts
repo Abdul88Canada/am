@@ -6,6 +6,7 @@ import { BadRequestError, validateRequest } from '@ampdev/common';
 import { Users } from '../models/users';
 import { Authentication } from '../models/authentication';
 import { natsWraper } from "../nats-wrapper";
+import { UserCreatedPublisher } from '../events/publishers/user-created-publisher';
 
 const router = express.Router();
 
@@ -20,7 +21,7 @@ router.post('/api/users/brands/signup', [
     ], 
     validateRequest,
     async (req: Request, res: Response) => {
-        const { email, userName, phoneNumber, password } = req.body;
+        const { email, userName, password } = req.body;
 
         const existingEmail = await Authentication.findOne({ email });
         const existingUserName = await Authentication.findOne({ userName });
@@ -59,6 +60,13 @@ router.post('/api/users/brands/signup', [
         req.session = {
             jwt: userJwt
         };
+
+        new UserCreatedPublisher(natsWraper.client).publish({
+            user_id: user_id,
+            user_type: user_type,
+            created_at: created_at,
+            userName: userName
+        });
 
         res.status(201).send(auth);
 });

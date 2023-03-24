@@ -3,14 +3,13 @@ import { json } from 'body-parser';
 import 'express-async-errors';
 import mongoose from 'mongoose';
 import cookieSession from 'cookie-session';
-import { currentUser, errorHandler, NotFoundError  } from '@ampdev/common';
+import { currentUser, errorHandler, NotFoundError } from '@ampdev/common';
 
-import { currentUserRouter } from './routes/currentuser';
-import { signinRouter } from './routes/signin';
-import { signoutRouter } from './routes/signout';
-import { signupRouter } from './routes/signup';
+import { createCampaignRouter } from './routes/add-campaign';
+import { listCampaignsRouter } from './routes/list-campaigns';
 
 import { natsWraper } from './nats-wrapper';
+import { UserCreatedListener } from './events/listeners/user-created-listener';
 
 const app = express();
 
@@ -27,23 +26,22 @@ app.use(
 
 app.use(currentUser);
 
-app.use(currentUserRouter);
-app.use(signinRouter);
-app.use(signoutRouter);
-app.use(signupRouter);
+app.use(createCampaignRouter);
+app.use(listCampaignsRouter);
 
 app.get('*', async (req, res) => {
     throw new NotFoundError();
-})
+});
 
 app.use(errorHandler);
 
+
 const start = async () => {
     //check that env variables are defined
-    if (!process.env.JWT_KEY) {
-        throw new Error('JWT_KEY must be defined');
-    }
-    if (!process.env.MONGO_URI) {
+     if (!process.env.JWT_KEY) {
+         throw new Error('JWT_KEY must be defined');
+     }
+     if (!process.env.MONGO_URI) {
         throw new Error('MONGO_URI must be defined');
     }
     if (!process.env.NATS_CLIENT_ID) {
@@ -66,13 +64,16 @@ const start = async () => {
         });
         process.on('SIGINT', () => natsWraper.client.close());
         process.on('SIGTERM', () => natsWraper.client.close());
+
+        new UserCreatedListener(natsWraper.client).listen();
+              
         await mongoose.connect(process.env.MONGO_URI);
         console.log('Connected to mongoDB');
     } catch(err) {
         console.log(err);
     }
     app.listen(3000, () => {
-        console.log("Listening at port: 3000!!!")
+        console.log("listening at port: 3000!!!")
     });
 };
 

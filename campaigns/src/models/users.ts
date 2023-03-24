@@ -1,12 +1,13 @@
 import mongoose, {Types} from "mongoose";
 
+
 //An interface that describes the properties
 //that are required to create a new user
 interface UsersAttrs {
-    user_id: String,
-    user_type: string,
-    created_at: Date,
-    userName: String
+    user_id: String;
+    user_type: String;
+    created_at: Date;
+    userName: String;
     campaigns?: [String];
 }
 
@@ -19,10 +20,10 @@ interface UsersModel extends mongoose.Model<UsersDoc> {
 //An interface that describes the properties
 //that a user document has
 interface UsersDoc extends mongoose.Document {
-    user_id: String,
-    user_type: string,
-    created_at: Date,
-    userName: String
+    user_id: String;
+    user_type: String;
+    created_at: Date;
+    userName: String;
     campaigns?: [String];
 }
 
@@ -35,15 +36,14 @@ const usersSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    created_at: {
+        type: Date
+    },
     userName: {
-        type: String,
-        required: true
+        type: String
     },
     campaigns: {
         type: [String]
-    },
-    created_at: {
-        type: Date
     }
 }, {
     toJSON: {
