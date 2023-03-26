@@ -10,6 +10,29 @@ import Handeling from '../../components/campaigns/form/handeling';
 const AddProperty = ({currentUser, campaigns}) => {
     const [page, setPage] = useState(0);
     const user_id = currentUser.id;
+    const [formData, setFormData] = useState({
+        name: '',
+        product_type: '',
+        product_format: '',
+        product_qty: '',
+        start_date: '',
+        duration: 0,
+        instructions: '',
+        expiry_date: '',
+        age_group: '',
+        segment: '',
+        gender: '',
+        countries: '',
+        cities: '',
+        package_type: '',
+        isLiquid: '',
+        temp: '',
+        co_packaged: '',
+        co_packaging_needs: '',
+        smaples_per_bundle: 0,
+        printing: '',
+        printing_needs: ''
+        })
 
     // a hook to handle the request and if any errors happen
     const { doRequest, errors } = useRequest({
@@ -29,13 +52,13 @@ const AddProperty = ({currentUser, campaigns}) => {
 
     const pageDisplay = () => {
         if (page === 0 ) {
-            return <ProductInfo />
+            return <ProductInfo formData={formData} setFormData={setFormData} />
         }
         else if (page === 1) {
-            return <Targeting />
+            return <Targeting formData={formData} setFormData={setFormData} />
         }
         else if (page === 2 ) {
-            return <Handeling />
+            return <Handeling formData={formData} setFormData={setFormData} />
         }
     }
 
