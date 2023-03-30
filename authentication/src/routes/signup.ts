@@ -10,7 +10,7 @@ import { UserCreatedPublisher } from '../events/publishers/user-created-publishe
 
 const router = express.Router();
 
-router.post('/api/users/brands/signup', [
+router.post('/api/users/signup', [
     body('email')
         .isEmail()
         .withMessage('Email must be valid'),
@@ -22,7 +22,7 @@ router.post('/api/users/brands/signup', [
     validateRequest,
     async (req: Request, res: Response) => {
         const { email, userName, password } = req.body;
-
+        console.log('I AM IN AUTH');
         const existingEmail = await Authentication.findOne({ email });
         const existingUserName = await Authentication.findOne({ userName });
 
@@ -38,7 +38,7 @@ router.post('/api/users/brands/signup', [
         await auth.save();
 
         const user_id = auth.id;
-        const user_type = 'Brand';
+        const user_type = 'Owner';
         const created_at = new Date();
 
         const user = Users.build({user_id, user_type, created_at, userName});

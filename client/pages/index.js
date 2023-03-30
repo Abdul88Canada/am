@@ -1,19 +1,14 @@
 import { useState } from "react"
+import { Navigate, Route, Routes } from 'react-router-dom';
 
-import UnitList from '../components/units/unitList';
+import Layout from '../layouts/Layout';
 
-const LandingPage =  ({ campaigns, currentUser }) => {   
 
-    const [index, setIndex] = useState(0);
-
+const LandingPage =  ({ currentUser }) => {   
     return (
         currentUser ? (
             <div>
-                Welcome, {currentUser.userName}!
-                <div>
-                    <div className="input-group mb-3">  
-                    </div>
-                </div>
+              <Layout />  
             </div>
         ) 
             : <h1>You are signed out</h1>
@@ -25,8 +20,7 @@ LandingPage.getInitialProps = async (context, client, currentUser) => {
     return {}
    } 
    else {
-    const { data } = await client.get('/api/campaigns'); 
-    return {campaigns: data};
+    return {};
    }
 }
 

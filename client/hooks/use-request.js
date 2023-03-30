@@ -19,7 +19,7 @@ export default ({ url, method, body, onSuccess }) => {
             setErros(
                 <div className="alert alert-danger">
                     <ui className="my-0">
-                        {err.response.data.errors.map(err => <li key={err.message}>{err.message}</li>)}
+                        {err.response.data.errors?.map(err => <li key={err.message}>{err.message}</li>)}
                     </ui>
                 </div>
             )

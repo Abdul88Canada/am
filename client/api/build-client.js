@@ -11,6 +11,6 @@ export default ({ req }) => {
         // we are on a broswer
         return axios.create({
             baseURL: '/'
-        })
+        });
     }
 }
