@@ -1,14 +1,11 @@
 import { useState } from "react"
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-import Layout from '../layouts/Layout';
-
-
 const LandingPage =  ({ currentUser }) => {   
     return (
         currentUser ? (
             <div>
-              <Layout />  
+              Hello 
             </div>
         ) 
             : <h1>You are signed out</h1>

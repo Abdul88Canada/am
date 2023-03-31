@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Button, Form, Row, Col } from 'react-bootstrap';
-import Divider from 'components/common/Divider';
+import Divider from '../../components/common/Divider';
 import SocialAuthButtons from './SocialAuthButtons';
 
 const RegistrationForm = ({ hasLabel }) => {
@@ -91,10 +90,6 @@ const RegistrationForm = ({ hasLabel }) => {
               })
             }
           />
-          <Form.Check.Label className="form-label">
-            I accept the <Link to="#!">terms</Link> and{' '}
-            <Link to="#!">privacy policy</Link>
-          </Form.Check.Label>
         </Form.Check>
       </Form.Group>
 
@@ -113,9 +108,6 @@ const RegistrationForm = ({ hasLabel }) => {
           Register
         </Button>
       </Form.Group>
-      <Divider>or register with</Divider>
-
-      <SocialAuthButtons />
     </Form>
   );
 };

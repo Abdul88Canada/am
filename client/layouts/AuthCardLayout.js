@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Card, Col, Row } from 'react-bootstrap';
-import Background from 'components/common/Background';
-import Flex from 'components/common/Flex';
-import Section from 'components/common/Section';
+import Background from '../components/common/Background';
+import Flex from '../components/common/Flex';
+import Section from '../components/common/Section';
 
-import bgShape from 'assets/img/illustrations/bg-shape.png';
-import shape1 from 'assets/img/illustrations/shape-1.png';
-import halfCircle from 'assets/img/illustrations/half-circle.png';
+import bgShape from '../assets/img/illustrations/bg-shape.png';
+import shape1 from '../assets/img/illustrations/shape-1.png';
+import halfCircle from '../assets/img/illustrations/half-circle.png';
 
 const AuthCardLayout = ({ leftSideContent, children, footer = true }) => {
   return (

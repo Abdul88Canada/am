@@ -1,7 +1,7 @@
 import React from 'react';
 //import { Link } from 'react-router-dom';
 import AuthCardLayout from '../../layouts/AuthCardLayout';
-import RegistrationForm from '../../components/authenication/RegistrationForm';
+import RegistrationForm from '../../components/authentication/RegistrationForm';
 
 import { Button } from 'react-bootstrap';
 
